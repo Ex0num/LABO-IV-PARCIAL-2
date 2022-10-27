@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/Servicios/auth.service';
 import { FirebaseService } from 'src/app/Servicios/firebase.service';
 
 @Component({
@@ -8,12 +10,30 @@ import { FirebaseService } from 'src/app/Servicios/firebase.service';
 })
 export class UsuariosComponent implements OnInit {
 
-  constructor(public srvFirebase:FirebaseService) {}
+  constructor(public srvFirebase:FirebaseService, public srvAuth:AuthService, public routerRecieved:Router) {}
 
   listaEspecialistasDB: any[] = [];
   listaEspecialistasBloqueadosDB: any[] = [];
   listaEspecialistasHabilitadosDB: any[] = [];
   listaPacientesDB: any[] = [];
+
+  emojiProhibido = "🚫";
+  emojiHabilitado = "☑️";
+
+  public cargandoSpinner = true;
+
+  public altaAdminHabilitada = false;
+  public mensajeAltaAdministrador = "Generar nuevo administrador";
+
+  public mailAdminIngresado:any;
+  public passwordAdminIngresado:any;
+  public passwordAdminConfirmIngresado:any;
+  public nombreAdminIngresado:any;
+  public apellidoAdminIngresado:any;
+  public edadAdminIngresada:any;
+  public dniAdminIngresado:any;
+  public fotoAdminIngresada:any;
+
 
   async ngOnInit(): Promise<void> 
   {
@@ -31,11 +51,13 @@ export class UsuariosComponent implements OnInit {
 
     console.log("Especialistas HABILITADOS:");
     console.log(this.listaEspecialistasHabilitadosDB);
-  }
 
-  emojiProhibido = "🚫";
-  emojiHabilitado = "☑️";
-  
+    setTimeout( ()=> 
+    {
+      this.cargandoSpinner = false;
+    },2000)
+
+  }
 
   cambiarEstadoEspecialista(e:any, especialista:any)
   {
@@ -80,4 +102,45 @@ export class UsuariosComponent implements OnInit {
     
   } 
 
+  cambiarEstadoAltaAdministrador()
+  {
+    if (this.altaAdminHabilitada == true)
+    {
+      this.mensajeAltaAdministrador = "Generar nuevo administrador";
+      this.altaAdminHabilitada = false;
+    }
+    else
+    {
+      this.mensajeAltaAdministrador = "Oculta menú de alta";
+      this.altaAdminHabilitada = true;
+    }
+  }
+
+  public fotoAdminSubida(event:any)
+  {
+    let fileList = event.target.files;
+    this.fotoAdminSubida = fileList[0];
+    console.log(this.fotoAdminSubida);
+  }
+
+  public registrarAdmin()
+  {
+    this.srvFirebase.subirAdministradorDB(this.mailAdminIngresado,this.passwordAdminIngresado,this.nombreAdminIngresado,this.apellidoAdminIngresado,this.edadAdminIngresada,this.dniAdminIngresado,this.fotoAdminIngresada);
+    this.srvAuth.register(this.mailAdminIngresado,this.passwordAdminIngresado);
+    this.routerRecieved.navigate(['/verificacion-mail']);
+    this.cambiarEstadoAltaAdministrador();
+    this.mailAdminIngresado = "";
+    this.limpiarControles();
+  }
+
+  private limpiarControles()
+  {
+    this.mailAdminIngresado = "";
+    this.passwordAdminIngresado = "";
+    this.passwordAdminConfirmIngresado = "";
+    this.nombreAdminIngresado = "";
+    this.apellidoAdminIngresado = "";
+    this.dniAdminIngresado = undefined;
+    this.fotoAdminIngresada = undefined;
+  }
 }

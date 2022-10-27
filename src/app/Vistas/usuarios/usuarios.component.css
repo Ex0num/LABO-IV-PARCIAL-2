@@ -1,9 +1,70 @@
 
+.spinner
+{
+    margin-left: 35%;
+    margin-top: 15%;
+}
+
+#btn-alta-admin
+{
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  border-radius: 5px;
+  margin-top: 1rem;
+  width: 65%;
+  height: 2.5rem;
+  margin-left: 20%;
+  color:  white;
+  background-color: #425b65;
+  border: 1px solid white;
+}
+
+#seccion-form-administrador
+{
+    margin-left: 3%;
+}
+
+#btn-alta-admin:hover
+{
+    background-color: #556e78;
+}
+
+
+#nombre-admin, #apellido-admin, #edad-admin, #dni-admin, #mail-admin, #password-admin,  #passwordconfirm-admin
+{
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  width: 95%;
+  margin-left: 2%;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.custom-file-upload {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  height: 2.5rem;
+  width: 99%;
+  padding: 4px;
+  text-align: center;
+  border-radius: 5px;
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+#btn-registrar-admin
+{
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-top: 1rem;
+  width: 65%;
+  height: 2.5rem;
+  margin-left: 20%;
+}
 
 /* ----- COSAS GENERALES ------*/
 #usuarios-main-container
 {
-    margin-top: 3rem;
+    margin-top: 1rem;
     border-radius: 5px;
     height: 30rem;
     margin-bottom: 1rem;

@@ -1,10 +1,65 @@
+<div class="row">
+
+    <div class="col">
+        <button id="btn-alta-admin" (click)="cambiarEstadoAltaAdministrador()">{{mensajeAltaAdministrador}}</button>
+    </div>
+
+    <div class="container" id="seccion-form-administrador" *ngIf="altaAdminHabilitada == true">
+        <div class="row">
+          <div class="col-md-6 offset-md-3">
+            <div class="card my-5">
+    
+                <div class="card-body cardbody-color p-lg-5">   
+                
+                    <form>   
+                        <div class="row">
+                            
+                            <input [(ngModel)]="mailAdminIngresado" [ngModelOptions]="{standalone: true}" type="mail" class="form-control" id="mail-admin" placeholder="Mail">
+                            <input [(ngModel)]="passwordAdminIngresado" [ngModelOptions]="{standalone: true}" type="password" class="form-control" id="password-admin" placeholder="Password">
+                            <input [(ngModel)]="passwordAdminConfirmIngresado" [ngModelOptions]="{standalone: true}" type="password" class="form-control" id="passwordconfirm-admin" placeholder="Password confirmada">
+                            
+                            <div class="col">
+                                <input [(ngModel)]="nombreAdminIngresado" [ngModelOptions]="{standalone: true}" type="nombre" class="form-control" id="nombre-admin" placeholder="Nombre">
+                            </div>
+   
+                            <div class="col">
+                                <input [(ngModel)]="apellidoAdminIngresado" [ngModelOptions]="{standalone: true}" type="apellido" class="form-control" id="apellido-admin" placeholder="Apellido">       
+                            </div>
+                             
+                            <div class="col">
+                                <input [(ngModel)]="edadAdminIngresada" [ngModelOptions]="{standalone: true}" type="number" class="form-control" id="edad-admin" placeholder="Edad">
+                            </div>
+                           
+                            <input [(ngModel)]="dniAdminIngresado" [ngModelOptions]="{standalone: true}" type="number" class="form-control" id="dni-admin" placeholder="DNI">                        
+
+                            <div class="col">
+                                <label class="custom-file-upload">
+                                    <input type="file" size="20" accept="image/png,image/jpeg" class="form-item" id="file-input1-admin"   (change)="fotoAdminSubida($event)">     
+                                </label>
+                            </div>
+                    
+                            <div class="row">
+                                <button id="btn-registrar-admin" (click)="registrarAdmin()">Registrar</button>
+                            </div>
+                        </div> 
+                    </form>
+
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+      
+</div>
+ 
 <main class="container" id="usuarios-main-container">
 
     <div class="row">
 
         <div class="col">
             
-            <ul id="lista-especialistas">
+            <div *ngIf="cargandoSpinner == true"><img class="spinner" src="../../../assets/spinner.gif"></div>
+            <ul id="lista-especialistas" *ngIf="cargandoSpinner == false">
                 <label class="titulo-listas">Listado de especialistas habilitados</label>
                 <li class="item-especialista" *ngFor="let especialista of listaEspecialistasHabilitadosDB">
 
@@ -25,8 +80,8 @@
                 </li>
             </ul>
 
-            <ul id="lista-especialistas-bloqueados">
-                <label class="titulo-listas">Listado de especialistas bloqueados</label>
+            <ul id="lista-especialistas-bloqueados" *ngIf="cargandoSpinner == false">
+                <label class="titulo-listas">Listado de especialistas inhabilitado</label>  
                 <li class="item-especialista-bloqueado" *ngFor="let especialistaBloqueado of listaEspecialistasBloqueadosDB">
 
                     <div class="row">
@@ -50,8 +105,9 @@
 
         <div class="col">    
               
-            <ul id="lista-pacientes">
-                <label class="titulo-listas" id="titulo-pacientes">Listado de pacientes</label>
+            <div *ngIf="cargandoSpinner == true"><img class="spinner" src="../../../assets/spinner.gif"></div>
+            <ul id="lista-pacientes" *ngIf="cargandoSpinner == false">
+                <label class="titulo-listas" id="titulo-pacientes">Listado de pacientes</label>             
                 <li class="item-especialista" *ngFor="let paciente of listaPacientesDB">
 
                     <div class="row">
@@ -73,5 +129,7 @@
         </div>
 
     </div>
+
+
 
 </main>

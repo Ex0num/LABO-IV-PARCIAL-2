@@ -263,4 +263,40 @@ export class AuthService {
 
     return resultadoNegado;
   }
+
+  
+  public async isActualSessionLoged()
+  {
+    let resultado = false;
+
+    let pacientesArray = await this.srvFirebase.leerPacientesDB();
+    let especialistasArray = await this.srvFirebase.leerEspecialistasDB();
+    let administradoresArray = await this.srvFirebase.leerAdministradoresDB();
+
+    pacientesArray.forEach( (element)=>
+    {
+      if (element["mail"] == this.userLogedmail)
+      {
+        resultado = true;
+      }
+    });
+
+    especialistasArray.forEach( (element)=>
+    {
+      if (element["mail"] == this.userLogedmail)
+      {
+        resultado = true;
+      }
+    });
+
+    administradoresArray.forEach( (element)=>
+    {
+      if (element["mail"] == this.userLogedmail)
+      {
+        resultado = true;
+      }
+    });
+
+    return resultado;
+  }
 }
