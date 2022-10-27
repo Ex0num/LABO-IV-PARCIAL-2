@@ -6,13 +6,13 @@ import { AuthService } from '../Servicios/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class OnlyNotVerifiedMailGuard implements CanActivate {
+export class OnlyAvailableAccountGuard implements CanActivate {
 
   constructor(public srvAuth:AuthService){};
 
-  canActivate(route: ActivatedRouteSnapshot,state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree 
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree 
   {
-    return this.srvAuth.isActualSessionNotVerified();
+    return this.srvAuth.isActualSessionAvaliable();
   }
   
 }

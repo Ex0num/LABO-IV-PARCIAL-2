@@ -193,15 +193,74 @@ export class AuthService {
     return resultado;
   }
 
-  // public async isActualSessionNotVerified()
-  // {
-  //   let resultado:boolean;
+  public async isActualSessionAvaliable()
+  {
+    let resultado = true;
 
-  //   setTimeout(() => {
-  //     resultado = this.isVerified;
-  //     console.log("Is not verified: " + !resultado);
-  //   }, 3000);
+    let arrayEspecialistas = await this.srvFirebase.leerEspecialistasDB();
 
-  //   return resultado = this.isVerified;
-  // }
+    arrayEspecialistas.forEach( (element)=>
+    {
+      if (element["mail"] == this.userLogedmail && element["estadoCuenta"] == "inhabilitado")
+      {
+        resultado = false;
+      }
+    });
+
+    return resultado;
+  }
+
+  public async isActualSessionVerified()
+  {
+    let resultado = true;
+
+    let pacientesArray = await this.srvFirebase.leerPacientesDB();
+    let especialistasArray = await this.srvFirebase.leerEspecialistasDB();
+
+    pacientesArray.forEach(element => 
+    {
+      if (element["mail"] == this.userLogedmail && this.isVerified == false)
+      {
+        resultado = false;
+      }
+    });
+
+    especialistasArray.forEach(element => 
+    {
+      if (element["mail"] == this.userLogedmail && this.isVerified == false)
+      {
+        resultado = false;
+      }
+    }); 
+
+    return resultado;
+  }
+
+  public async isActualSessionNotVerified()
+  {
+    let resultado = true;
+
+    let pacientesArray = await this.srvFirebase.leerPacientesDB();
+    let especialistasArray = await this.srvFirebase.leerEspecialistasDB();
+
+    pacientesArray.forEach(element => 
+    {
+      if (element["mail"] == this.userLogedmail && this.isVerified == false)
+      {
+        resultado = false;
+      }
+    });
+
+    especialistasArray.forEach(element => 
+    {
+      if (element["mail"] == this.userLogedmail && this.isVerified == false)
+      {
+        resultado = false;
+      }
+    }); 
+
+    let resultadoNegado = !resultado;
+
+    return resultadoNegado;
+  }
 }
