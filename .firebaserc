@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "prisud"
+  },
+  "targets": {
+    "prisud": {
+      "hosting": {
+        "Prisud": [
+          "prisud"
+        ]
+      }
+    }
+  }
+}

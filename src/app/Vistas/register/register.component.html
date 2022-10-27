@@ -1,0 +1,139 @@
+<body>
+
+    <div class="container" id="seccion-selector" *ngIf="seleccionandoRegistro == true">
+        <div class="row">
+          <div class="col-md-6 offset-md-3">
+            <div class="card my-5">
+    
+                <div class="card-body cardbody-color p-lg-5">   
+                   
+                    <h1 class="h3 mb-3 fw-normal" id="card-tittle">Elija como desea registrarse</h1>
+                    
+                    <div class="row" id="contenedor-selector-registro">
+                        <div class="col" (click)="mostrarFormEspecialista()"><img id="imagen-especialista" src="../../../assets/especialista.png" width="50%" height="100%"></div>
+                        <div class="col" (click)="mostrarFormPaciente()"><img id="imagen-paciente" src="../../../assets/paciente.png" width="50%" height="100%"></div>
+                    </div>
+
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="cargandoSpinner == true"><img src="../../../assets/spinner.gif"></div>
+
+      <div class="container" id="seccion-form-paciente" *ngIf="seleccionandoRegistro == false && registroPaciente == true">
+        <div class="row">
+          <div class="col-md-6 offset-md-3">
+            <div class="card my-5">
+    
+                <div class="card-body cardbody-color p-lg-5">   
+                
+                    <form>   
+                        <div class="row">
+                            
+                            <input [(ngModel)]="mailIngresado" [ngModelOptions]="{standalone: true}" type="mail" class="form-control" id="mail-paciente" placeholder="Mail">
+                            <input [(ngModel)]="passwordIngresado" [ngModelOptions]="{standalone: true}" type="password" class="form-control" id="password-paciente" placeholder="Password">
+                            <input [(ngModel)]="passwordConfirmIngresado" [ngModelOptions]="{standalone: true}" type="password" class="form-control" id="passwordconfirm-paciente" placeholder="Password confirmada">
+                            
+                            <div class="col">
+                                <input [(ngModel)]="nombreIngresado" [ngModelOptions]="{standalone: true}" type="nombre" class="form-control" id="nombre-paciente" placeholder="Nombre">
+                            </div>
+   
+                            <div class="col">
+                                <input [(ngModel)]="apellidoIngresado" [ngModelOptions]="{standalone: true}" type="apellido" class="form-control" id="apellido-paciente" placeholder="Apellido">       
+                            </div>
+                             
+                            <div class="col">
+                                <input [(ngModel)]="edadIngresada" [ngModelOptions]="{standalone: true}" type="number" class="form-control" id="edad-paciente" placeholder="Edad">
+                            </div>
+                           
+                            <input [(ngModel)]="dniIngresado" [ngModelOptions]="{standalone: true}" type="number" class="form-control" id="dni-paciente" placeholder="DNI">                        
+
+                            <div class="col">
+                                <label class="custom-file-upload">
+                                    <input type="file" size="20" accept="image/png,image/jpeg" class="form-item" id="file-input1-paciente"   (change)="fotoPacienteSubida($event, 1)">     
+                                </label>
+                            </div>
+
+                            <div class="col">
+                                <label class="custom-file-upload">
+                                    <input type="file" size="20" accept="image/png,image/jpeg" class="form-item" id="file-input2-paciente"   (change)="fotoPacienteSubida($event, 2)">     
+                                </label>
+                            </div>
+                    
+                            <div class="row">
+                                <button type="submit" id="btn-registrar-paciente" (click)="registrarPaciente()">Registrar</button>
+                            </div>
+                        </div> 
+                    </form>
+
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container" id="seccion-form-especialista" *ngIf="seleccionandoRegistro == false && registroEspecialista == true">
+        <div class="row">
+          <div class="col-md-6 offset-md-3">
+            <div class="card my-5">
+    
+                <div class="card-body cardbody-color p-lg-5">   
+                
+                    <form>   
+                        <div class="row">
+                            
+                            <input [(ngModel)]="mailEspecialistaIngresado" [ngModelOptions]="{standalone: true}" type="mail" class="form-control" id="mail-especialista" placeholder="Mail">
+                            <input [(ngModel)]="passwordEspecialistaIngresado" [ngModelOptions]="{standalone: true}" type="password" class="form-control" id="password-especialista" placeholder="Password">
+                            <input [(ngModel)]="passwordEspecialistaConfirmIngresado" [ngModelOptions]="{standalone: true}" type="password" class="form-control" id="passwordconfirm-especialista" placeholder="Password confirmada">
+                            
+                            <div class="col">
+                                <input [(ngModel)]="nombreEspecialistaIngresado" [ngModelOptions]="{standalone: true}" type="nombre" class="form-control" id="nombre-especialista" placeholder="Nombre">
+                            </div>
+   
+                            <div class="col">
+                                <input [(ngModel)]="apellidoEspecialistaIngresado" [ngModelOptions]="{standalone: true}" type="apellido" class="form-control" id="apellido-especialista" placeholder="Apellido">       
+                            </div>
+                             
+                            <div class="col">
+                                <input [(ngModel)]="edadEspecialistaIngresada" [ngModelOptions]="{standalone: true}" type="number" class="form-control" id="edad-especialista" placeholder="Edad">
+                            </div>
+                           
+                            <input [(ngModel)]="dniEspecialistaIngresado" [ngModelOptions]="{standalone: true}" type="number" class="form-control" id="dni-especialista" placeholder="DNI">                        
+
+                            <div class="col">
+                                <label class="custom-file-upload">
+                                    <input type="file" size="20" accept="image/png,image/jpeg" class="form-item" id="file-input1-paciente"   (change)="fotoEspecialistaSubida($event)">     
+                                </label>
+                            </div>
+
+                            <input readonly placeholder="Elija sus especialidades" id="especialidades-elegidas" value="{{especialidadesSeleccionadas}}">
+                            <button id="btn-borrar-especialidades" (click)="limpiarEspecialidades()">✘</button>
+
+                             <div class="multiple_select_checkbox">
+                                <input class="especialidad-opcion" (change)="actualizarEspecialidades($event)" type="checkbox" value="Odontología"/><label class="lbl-especialidad">Odontología</label><br>
+                                <input class="especialidad-opcion" (change)="actualizarEspecialidades($event)" type="checkbox" value="Dermatología"/><label class="lbl-especialidad">Dermatología</label><br>
+                                <input class="especialidad-opcion" (change)="actualizarEspecialidades($event)" type="checkbox"  value="Otorrinonaringología"/><label class="lbl-especialidad">Otorrinonaringología</label><br>
+                                <input class="especialidad-opcion" (change)="actualizarEspecialidades($event)" type="checkbox" value="Naringología"/><label class="lbl-especialidad">Ortopedia</label><br>
+                                <input class="especialidad-opcion" (change)="actualizarEspecialidades($event)" type="checkbox" value="Naringología"/><label class="lbl-especialidad">Cardiología</label><br>
+                                <input class="especialidad-opcion" (change)="actualizarEspecialidades($event)" type="checkbox" value="Naringología"/><label class="lbl-especialidad">Cirugía</label><br>
+                                <input class="especialidad-opcion" (change)="actualizarEspecialidades($event)" type="checkbox" value="Naringología"/><label class="lbl-especialidad">Inmunología</label><br>
+                                <input class="especialidad-opcion" (change)="actualizarEspecialidades($event)" type="checkbox" value="Naringología"/><label class="lbl-especialidad">Gastroenterología</label><br>
+                             </div>
+                             <input placeholder="Escríbala si no la pudo encontrar" type="text" id="especialidades-agregadas" [(ngModel)]="especialidadAgregada" [ngModelOptions]="{standalone: true}">  
+                             <button id="btn-agregar-especialidad" (click)="agregarEspecialidad()">↑</button>            
+                    
+                            <div class="row">
+                                <button type="submit" id="btn-registrar-especialista" (click)="registrarEspecialista()">Registrar</button>
+                            </div>
+                        </div> 
+                    </form>
+
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+</body>

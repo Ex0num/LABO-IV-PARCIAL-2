@@ -1,0 +1,102 @@
+
+
+/* ----- COSAS GENERALES ------*/
+#usuarios-main-container
+{
+    margin-top: 3rem;
+    border-radius: 5px;
+    height: 30rem;
+    margin-bottom: 1rem;
+    background-color: #425b65;
+    color: white;
+    overflow: auto;
+}
+
+.titulo-listas
+{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 20px;
+    margin-top: 1rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    margin-left: 20%;
+}
+
+#titulo-pacientes
+{
+    margin-left: 30%;
+}
+
+.btn-prohibir-cuenta
+{
+    background-color: #425b65;
+    border-radius: 4px;
+    border: 1px solid white;
+}
+
+.btn-prohibir-cuenta:hover
+{
+    background-color: #6a4141;
+}
+
+li
+{
+    list-style: none;
+}
+
+.item-especialista, .item-paciente
+{
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid white;
+    height: 8rem;
+}
+
+.item-especialista-bloqueado
+{
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid white;
+    height: 8rem;
+    background-color: #6d5252;
+}
+
+#lista-pacientes
+{
+    margin-right: 2rem;
+}
+
+#data-content
+{
+    margin-top: 0.8rem;
+}
+
+/*  ---- ESPECIALISTAS ----*/
+.foto-especialista
+{
+    width: 12rem;
+    height: 7.8rem;
+    border-radius: 3px;
+}
+
+.item-especialista:hover, .item-paciente:hover
+{
+    background-color: #556e78;
+}
+
+#btn-bloquear-especialista
+{
+    text-align: right;
+}
+
+/* PACIENTES */
+.foto-paciente
+{
+    width: 50%;
+    height: 7.8rem;
+    border-radius: 3px;
+}
+
+

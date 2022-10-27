@@ -1,0 +1,77 @@
+<main class="container" id="usuarios-main-container">
+
+    <div class="row">
+
+        <div class="col">
+            
+            <ul id="lista-especialistas">
+                <label class="titulo-listas">Listado de especialistas habilitados</label>
+                <li class="item-especialista" *ngFor="let especialista of listaEspecialistasHabilitadosDB">
+
+                    <div class="row">
+                        <div class="col">
+                            <img class="foto-especialista" src="{{especialista.foto1}}">
+                        </div>
+                        <div class="col" id="data-content">
+                            <label>{{especialista.nombre}} {{especialista.apellido}}</label><br>
+                            <label>{{especialista.mail}}</label><br>
+                            <label>{{especialista.edad}} Años</label><br>
+                            <label>DNI: {{especialista.dni}}</label><br>                             
+                        </div>
+                        <div class="col" id="btn-bloquear-especialista">
+                            <button class="btn-prohibir-cuenta" (click)="cambiarEstadoEspecialista($event, especialista)">☑️</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <ul id="lista-especialistas-bloqueados">
+                <label class="titulo-listas">Listado de especialistas bloqueados</label>
+                <li class="item-especialista-bloqueado" *ngFor="let especialistaBloqueado of listaEspecialistasBloqueadosDB">
+
+                    <div class="row">
+                        <div class="col">
+                            <img class="foto-especialista" src="{{especialistaBloqueado.foto1}}">
+                        </div>
+                        <div class="col" id="data-content">
+                            <label>{{especialistaBloqueado.nombre}} {{especialistaBloqueado.apellido}}</label><br>
+                            <label>{{especialistaBloqueado.mail}}</label><br>
+                            <label>{{especialistaBloqueado.edad}} Años</label><br>
+                            <label>DNI: {{especialistaBloqueado.dni}}</label><br>                             
+                        </div>
+                        <div class="col" id="btn-bloquear-especialista">
+                            <button class="btn-prohibir-cuenta" (click)="cambiarEstadoEspecialista($event, especialistaBloqueado)">🚫</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="col">    
+              
+            <ul id="lista-pacientes">
+                <label class="titulo-listas" id="titulo-pacientes">Listado de pacientes</label>
+                <li class="item-especialista" *ngFor="let paciente of listaPacientesDB">
+
+                    <div class="row">
+                        <div class="col">
+                            <img class="foto-paciente" src="{{paciente.foto1}}">
+                            <img class="foto-paciente" src="{{paciente.foto2}}">
+                        </div>
+                        <div class="col" id="data-content">
+                            <label>{{paciente.nombre}} {{paciente.apellido}}</label><br>
+                            <label>{{paciente.mail}}</label><br>
+                            <label>{{paciente.edad}} Años</label><br>
+                            <label>DNI: {{paciente.dni}}</label><br>                             
+                        </div>
+                    </div>
+
+                </li> 
+            </ul>
+
+        </div>
+
+    </div>
+
+</main>

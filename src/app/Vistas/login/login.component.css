@@ -1,0 +1,44 @@
+html,body 
+{
+  height: 100%;
+}
+
+body 
+{
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  display: flex;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #f5f5f5;
+  justify-content: center;
+}
+
+a{
+  text-decoration: none;
+}
+
+#card-tittle
+{
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  text-align: center;
+}
+
+#emailHelp
+{
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  margin-top: -2.5rem;
+}
+
+.btn-color{
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  background-color: #425b65;
+  color: #fff; 
+}
+
+#txtError
+{
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  text-align: center;
+  color: red;
+}

@@ -1,0 +1,20 @@
+<div class="card mt-5" *ngIf="isLoged == true && isVerified == false">
+    <div class="card-body">
+        <h3 class="card-tittle text-center">¡Gracias por haberse registrado!</h3>
+        <div class="form-group">
+            <p class="text-center">
+                Le enviamos un mail de confirmacion a su dirección <strong>{{mailLoged}}</strong>
+            </p>
+            <p class="text-center">
+                Por favor chequee su bandeja y clickee en el link que le proporcionamos para que su mail sea verificado.
+            </p>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-primary" (click)="enviarVerificacionMail()">Reenviar verificación</button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="isLoged == true && isVerified == true">
+    No maquinola. No tenes nada que hacer aca.
+</div>
