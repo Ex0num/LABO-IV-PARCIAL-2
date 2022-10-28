@@ -27,10 +27,19 @@ export class LoginComponent implements OnInit {
   //   this.errorShowed = errorRecibido;
   // }
 
-  public logearse()
+  public async logearse()
   {
     this.srvAuth.login(this.mailIngresadoLogin, this.passwordIngresadoLogin);
-    this.router.navigate(["/bienvenida"],);
-  }
 
+    let usuarioVerificado = await this.srvAuth.isActualSessionVerified();
+
+    if (usuarioVerificado == true)
+    {
+      this.router.navigate(["/bienvenida"],);
+    }
+    else
+    {
+      this.router.navigate(["/verificacion-mail"],);
+    }
+  }
 }

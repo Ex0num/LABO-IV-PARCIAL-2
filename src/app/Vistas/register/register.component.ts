@@ -43,11 +43,23 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {}
 
   // ------------------------ METODOS PACIENTE ---------------------
-  registrarPaciente()
+  async registrarPaciente()
   {
-    this.srvFirebase.subirPacienteDB(this.mailIngresado,this.passwordConfirmIngresado,this.nombreIngresado,this.apellidoIngresado,this.edadIngresada,this.dniIngresado,this.foto1Ingresada,this.foto2Ingresada);
-    this.srvAuth.register(this.mailIngresado,this.passwordIngresado);
-    this.routerRecieved.navigate(['/verificacion-mail']);
+    await this.srvFirebase.subirPacienteDB(this.mailIngresado,this.passwordConfirmIngresado,this.nombreIngresado,this.apellidoIngresado,this.edadIngresada,this.dniIngresado,this.foto1Ingresada,this.foto2Ingresada);
+    await this.srvAuth.register(this.mailIngresado,this.passwordIngresado);
+   
+    await this.limpiarFormPaciente();
+    await this.routerRecieved.navigate(["/verificacion-mail"],);
+
+    let usuarioVerificado = await this.srvAuth.isActualSessionVerified();
+    if (usuarioVerificado == true)
+    {
+      this.routerRecieved.navigate(["/verificacion-mail"],);
+    }
+    else
+    {
+      this.routerRecieved.navigate(["/verificacion-mail"],);
+    }
   }
 
   fotoPacienteSubida(event:any, numeroFoto:number)
@@ -66,15 +78,39 @@ export class RegisterComponent implements OnInit {
     }  
   }
 
-  // ------------------------ METODOS ESPECIALISTA --------------
-  registrarEspecialista()
+  limpiarFormPaciente()
   {
-    let especialidadesArray = this.formatearEspecialidades();
+    this.mailIngresado = "";
+    this.passwordIngresado = "";
+    this.passwordConfirmIngresado = "";
+    this.nombreIngresado = "";
+    this.apellidoIngresado = "";
+    this.edadIngresada = undefined;
+    this.dniIngresado = undefined;
+    this.foto1Ingresada = undefined;
+    this.foto2Ingresada = undefined;
+  }
+
+  // ------------------------ METODOS ESPECIALISTA --------------
+  async registrarEspecialista()
+  {
+    let especialidadesArray = await this.formatearEspecialidades();
     console.log(especialidadesArray);
 
-    this.srvFirebase.subirEspecialistaDB(this.mailEspecialistaIngresado,this.passwordEspecialistaConfirmIngresado,this.nombreEspecialistaIngresado,this.apellidoEspecialistaIngresado,this.edadEspecialistaIngresada,this.dniEspecialistaIngresado,this.foto1EspecialistaIngresada,especialidadesArray);
-    this.srvAuth.register(this.mailEspecialistaIngresado,this.passwordEspecialistaIngresado);
-    this.routerRecieved.navigate(['/verificacion-mail']);
+    await this.srvFirebase.subirEspecialistaDB(this.mailEspecialistaIngresado,this.passwordEspecialistaConfirmIngresado,this.nombreEspecialistaIngresado,this.apellidoEspecialistaIngresado,this.edadEspecialistaIngresada,this.dniEspecialistaIngresado,this.foto1EspecialistaIngresada,especialidadesArray);
+    await this.srvAuth.register(this.mailEspecialistaIngresado,this.passwordEspecialistaIngresado);
+
+    await this.limpiarFormEspecialista();
+
+    let usuarioVerificado = await this.srvAuth.isActualSessionVerified();
+    if (usuarioVerificado == true)
+    {
+      this.routerRecieved.navigate(["/verificacion-mail"],);
+    }
+    else
+    {
+      this.routerRecieved.navigate(["/verificacion-mail"],);
+    }
   }
 
   fotoEspecialistaSubida(event:any)
@@ -136,6 +172,20 @@ export class RegisterComponent implements OnInit {
     array = array.filter( (a,b)=> {if (a == ""){return b}else{return a}})
     return array;
   } 
+
+  limpiarFormEspecialista()
+  {
+    this.mailEspecialistaIngresado = "";
+    this.passwordEspecialistaIngresado = "";
+    this.passwordEspecialistaConfirmIngresado = "";
+    this.nombreEspecialistaIngresado = "";
+    this.apellidoEspecialistaIngresado = "";
+    this.edadEspecialistaIngresada = undefined;
+    this.dniEspecialistaIngresado = undefined;
+    this.foto1EspecialistaIngresada = undefined;
+    this.especialidadesSeleccionadas = "";
+    this.limpiarEspecialidades();
+  }
 
   // ------------------------ METODOS MOSTRADO --------------
   mostrarFormEspecialista()
