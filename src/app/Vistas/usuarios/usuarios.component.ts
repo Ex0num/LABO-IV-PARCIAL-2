@@ -82,37 +82,54 @@ export class UsuariosComponent implements OnInit {
     //Me fijo en que estado esta el usuario
     if (botonDelElemento.textContent == "🚫")
     {
-      elemento.style.backgroundColor = "#425b65";  
+      elemento.style.backgroundColor = "#425b65";
+      elemento.style.animation = "scale-out-center 0.3s cubic-bezier(0.550, 0.085, 0.680, 0.530) both";
       botonDelElemento.innerHTML = "☑️";
-      this.srvFirebase.setearEstadoCuentaEspecialista(especialista.mail,"habilitado");
 
-      this.listaEspecialistasHabilitadosDB.push(especialistaEstructurado);
-      this.listaEspecialistasBloqueadosDB = this.listaEspecialistasBloqueadosDB.filter( (a)=> {if (a.mail == especialista.mail){return 0}else{return -1}});
+      setTimeout(() => 
+      {
+        this.srvFirebase.setearEstadoCuentaEspecialista(especialista.mail,"habilitado");  
+        this.listaEspecialistasHabilitadosDB.push(especialistaEstructurado);
+        this.listaEspecialistasBloqueadosDB = this.listaEspecialistasBloqueadosDB.filter( (a)=> {if (a.mail == especialista.mail){return 0}else{return -1}});
+      },1000);
     }
     else if (botonDelElemento.textContent == "☑️")
     {
       elemento.style.backgroundColor = "#6d5252";
+      elemento.style.animation = "scale-out-center 0.1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both";
       botonDelElemento.innerHTML = "🚫";
-      this.srvFirebase.setearEstadoCuentaEspecialista(especialista.mail,"inhabilitado");
 
-      this.listaEspecialistasBloqueadosDB.push(especialistaEstructurado);
-      this.listaEspecialistasHabilitadosDB = this.listaEspecialistasHabilitadosDB.filter( (a)=> {if (a.mail == especialista.mail){return 0}else{return -1}});
-  
+      setTimeout(() => 
+      {
+        this.srvFirebase.setearEstadoCuentaEspecialista(especialista.mail,"inhabilitado");
+        this.listaEspecialistasBloqueadosDB.push(especialistaEstructurado);
+        this.listaEspecialistasHabilitadosDB = this.listaEspecialistasHabilitadosDB.filter( (a)=> {if (a.mail == especialista.mail){return 0}else{return -1}});
+      }, 1000);
     }
-    
   } 
 
   cambiarEstadoAltaAdministrador()
   {
     if (this.altaAdminHabilitada == true)
     {
-      this.mensajeAltaAdministrador = "Generar nuevo administrador";
-      this.altaAdminHabilitada = false;
+      let elementoFormAdmin:any = document.getElementById("seccion-form-administrador");
+      elementoFormAdmin.style.animation = "scale-out-center 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both";
+
+      setTimeout(() => {
+        this.mensajeAltaAdministrador = "Generar nuevo administrador";
+        this.altaAdminHabilitada = false;
+      }, 1000);
+      
     }
     else
     {
       this.mensajeAltaAdministrador = "Oculta menú de alta";
       this.altaAdminHabilitada = true;
+
+      setTimeout(() => {
+        let elementoFormAdmin:any = document.getElementById("seccion-form-administrador");
+        elementoFormAdmin.style.animation = "slide-in-elliptic-top-fwd 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both";
+      }, 50);
     }
   }
 
