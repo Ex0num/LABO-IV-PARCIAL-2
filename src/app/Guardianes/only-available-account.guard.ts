@@ -9,10 +9,12 @@ import { AuthService } from '../Servicios/auth.service';
 export class OnlyAvailableAccountGuard implements CanActivate {
 
   constructor(public srvAuth:AuthService){};
-
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree 
-  {
-    return this.srvAuth.isActualSessionAvaliable();
-  }
+  
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree 
+    {
+      return this.srvAuth.isActualSessionAvaliable();
+    }
   
 }

@@ -1,1 +1,32 @@
-<p>turnos works!</p>
+<div class="p-4 p-md-5 mb-4 rounded" id="contenedor-absoluto">
+
+    <div class="row">
+
+        <div class="col-md-4" id="col1">
+            <h1 class="display-4 fst-italic" id="titulo-principal">Listado</h1>
+            <div class="col-md-4" id="listado-turnos">
+                <div class="col p-4 d-flex flex-column position-static">
+                   
+                    <ul>
+                        <li *ngFor="let turno of listadoTurnosPacienteLogeado; let i = index">
+                            <label>{{turno.especialista}}</label>
+                        </li>
+                        
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4" id="col2">
+            <h1 class="display-4 fst-italic" id="titulo-principal2">Filtrar</h1>
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <app-opciones-filtradoras-turnos (opcionClickeada)="filtroClickeado($event)"></app-opciones-filtradoras-turnos>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

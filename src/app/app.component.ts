@@ -23,41 +23,51 @@ export const db = getFirestore(app);
 export const pacientes = collection(db, "pacientes");
 export const especialistas = collection(db, "especialistas");
 export const administradores = collection(db, "administradores");
+export const turnos = collection(db, "turnos");
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit
+export class AppComponent
 {
   mailShowed:any = "UserExample@gmail.com";
   isLoged = false;
   isAdmin = false;
+  isPaciente = false;
+  isEspecialista = false;
   isVerified = false;
 
   constructor(private router: Router, public srvAuth:AuthService)
   {
     const auth = getAuth();
 
-    onAuthStateChanged(auth, async (user) => 
+    onAuthStateChanged(auth, (user) => 
     {
       if (user) 
       {
         
         this.srvAuth.obtenerSesion();
 
-        this.mailShowed = this.srvAuth.userLogedmail;
-        this.isAdmin = await this.srvAuth.isAdmin;
-        this.isLoged = this.srvAuth.isLoged;
-        this.isVerified = this.srvAuth.isVerified;
-
-        console.log("--------------------------");
-        console.log("ISLOGED: " + this.isLoged);
-        console.log("ISVERIFIED: " + this.isVerified);
-        console.log("ISADMIN: " + this.isAdmin);
-        console.log("USERLOGEDMAIL: " + this.mailShowed);
-        console.log("--------------------------");
+        setTimeout(() => {
+          this.mailShowed = this.srvAuth.userLogedmail;
+          this.isAdmin = this.srvAuth.isAdmin;
+          this.isLoged = this.srvAuth.isLoged;
+          this.isVerified = this.srvAuth.isVerified;
+          this.isPaciente = this.srvAuth.isPacient;
+          this.isEspecialista = this.srvAuth.isEspecialist;
+  
+          console.log("--------------------------");
+          console.log("ISLOGED: " + this.isLoged);
+          console.log("ISVERIFIED: " + this.isVerified);
+          console.log("ISADMIN: " + this.isAdmin);
+          console.log("USERLOGEDMAIL: " + this.mailShowed);
+          console.log("IS PACIENTE: " + this.isPaciente);
+          console.log("IS ESPECIALISTA: " + this.isEspecialista);
+          console.log("--------------------------");
+        }, 2500);
+       
     
       } else 
       {
@@ -81,12 +91,7 @@ export class AppComponent implements OnInit
       btnSignUp?.removeAttribute("hidden");
     }, 2000);    
   }
-
-  ngOnInit(): void 
-  {
-    
-  }
-
+  
   cerrarSesion()
   {
     this.srvAuth.logOut();

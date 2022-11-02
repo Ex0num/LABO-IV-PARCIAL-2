@@ -1,0 +1,20 @@
+<button id="btn-filtro-especialista" (click)="actualizarFiltro('especialista')">Especialista</button>
+<button id="btn-filtro-especialidad" (click)="actualizarFiltro('especialidad')">Especialidad</button>
+
+<div id="container-opciones-filtradoras">
+
+    <ul id="opciones-especialistas" *ngIf="opcionFiltradoraSeleccionada == 'especialista'">
+        <li *ngFor="let especialista of arrayEspecialistas" class="item-especialista">
+            <img class="foto-especialista" src="{{especialista.foto1}}">
+            <label>Lic. {{especialista.nombre + " " + especialista.apellido}}</label>
+        </li>
+    </ul>
+
+    <ul id="opciones-especialidades" *ngIf="opcionFiltradoraSeleccionada== 'especialidad'">
+        <li *ngFor="let especialidad of arrayEspecialidades" class="item-especialidad">
+            <label>{{especialidad}}</label>
+        </li>
+    </ul>
+
+</div>
+

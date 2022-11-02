@@ -6,7 +6,7 @@ import { AuthService } from '../Servicios/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class OnlyVerifiedMailGuard implements CanActivate {
+export class OnlyAdminOPacienteGuard implements CanActivate {
   
   constructor(public srvAuth:AuthService){};
   
@@ -14,7 +14,7 @@ export class OnlyVerifiedMailGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree 
     {
-      return this.srvAuth.isActualSessionVerified();
+      return this.srvAuth.isActualSessionAdminOPaciente();
     }
   
 }

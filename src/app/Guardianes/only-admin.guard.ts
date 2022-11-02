@@ -9,10 +9,10 @@ import { AuthService } from '../Servicios/auth.service';
 export class OnlyAdminGuard implements CanActivate {
 
   constructor(public srvAuth:AuthService){};
-
+  
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree 
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
     {
       return this.srvAuth.isActualSessionAdministrador();
     }

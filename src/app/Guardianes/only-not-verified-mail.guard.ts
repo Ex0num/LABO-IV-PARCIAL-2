@@ -7,12 +7,14 @@ import { AuthService } from '../Servicios/auth.service';
   providedIn: 'root'
 })
 export class OnlyNotVerifiedMailGuard implements CanActivate {
-
+  
   constructor(public srvAuth:AuthService){};
-
-  canActivate(route: ActivatedRouteSnapshot,state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree 
-  {
-    return this.srvAuth.isActualSessionNotVerified();
-  }
+  
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree 
+    {
+      return this.srvAuth.isActualSessionNotVerified();
+    }
   
 }

@@ -40,6 +40,32 @@
     background-color: #b2bdc2;
 }
 
+@media (max-width: 1100px) 
+{
+        #bienvenida-main-container
+        {
+                height: 30rem;    
+        }
+}
+
+@media (max-width: 700px) 
+{
+        #bienvenida-main-container
+        {
+                height: 20rem;    
+        }
+}
+
+@media (max-width: 450px) 
+{
+        #bienvenida-main-container
+        {
+                height: 10rem;    
+                border-radius: 4px;
+        }
+}
+
+
 /* ANIMACIONES GENERADAS AUTOMATICAMENTE */
 /**
  * ----------------------------------------

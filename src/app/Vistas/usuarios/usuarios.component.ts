@@ -136,8 +136,8 @@ export class UsuariosComponent implements OnInit {
   public fotoAdminSubida(event:any)
   {
     let fileList = event.target.files;
-    this.fotoAdminSubida = fileList[0];
-    console.log(this.fotoAdminSubida);
+    this.fotoAdminIngresada = fileList[0];
+    console.log(this.fotoAdminIngresada);
   }
 
   public registrarAdmin()

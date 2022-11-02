@@ -1,0 +1,214 @@
+<div class="p-4 p-md-5 mb-4 rounded" id="contenedor-absoluto">
+    <div class="row" *ngIf="userDataLoaded == true && usuario.tipo == 'administrador'" id="data-administrador" hidden>
+        
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            
+            <div class="col-md-4" id="col1">
+                <img class="foto-usuario" src="{{usuario.foto1}}" width="100%" height="100%">
+            </div>
+
+            <div class="col p-4 d-flex flex-column position-static" id="col2">
+                <p>
+                    Datos personales: <br><br>
+                    <label>Mail: {{usuario.mail}}</label><br>
+                    <label>Nombre: {{usuario.nombre}} {{usuario.apellido}}</label><br>
+                    <label>Edad: {{usuario.edad}} Años</label><br>
+                    <label>DNI: {{usuario.dni}}</label><br>
+                    <label>Usted es <strong>{{usuario.tipo}}</strong></label>
+                </p>
+            </div> 
+
+        </div>
+    </div>
+
+    <div class="row" *ngIf="userDataLoaded == true && usuario.tipo == 'especialista'" id="data-especialista" hidden>
+        
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            
+            <div class="col-md-4" id="col3">
+                <img class="foto-usuario" src="{{usuario.foto1}}" width="100%" height="100%">
+            </div>
+
+            <div class="col p-4 d-flex flex-column position-static" id="col4">
+                <p style="width: 100%;">
+                    Datos personales: <br><br>
+                    <label>Mail: {{usuario.mail}}</label><br>
+                    <label>Nombre: {{usuario.nombre}} {{usuario.apellido}}</label><br>
+                    <label>Edad: {{usuario.edad}} Años</label><br>
+                    <label>DNI: {{usuario.dni}}</label><br>
+                    <label>Usted es <strong>{{usuario.tipo}}</strong></label><br><br>
+                    <label>Especialidades:</label><br>
+                    <li *ngFor="let especialidad of usuario.especialidades">{{especialidad}}</li><br>
+                </p>
+            </div> 
+            
+        </div>
+
+        <div>
+            <div class="col">
+                <button id="btn-mostrar-horarios" (click)="cambiarEstadoMostrarHorarios()" hidden>{{mensajeEstadoMostrarHorarios}}</button>
+            </div>
+
+            <div class="row" id="row-horarios" hidden>   
+                
+                <div class="row" style="margin-left: 0.05rem;">
+                    <h3 style="color: white; text-align: center;">Sus horarios laborales</h3>
+                    <button id="btn-autocheck" (click)="autocheckSwitchClickeado()">Autocheck</button>
+                </div> 
+
+                <div class="col" id="columna-dia-lunes">
+                    <input class="btn-horario-laboral" type="checkbox" (click)="switchearMostrarColumna('lunes')" id="horarios-lunes"><label>Lunes</label>
+                    <div class="horarios-semanales" *ngIf="mostrarLunes == true">
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-lunes" type="checkbox" value="8:00 a 8:30"><label class="hora-turno">8:00 a 8:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-lunes" type="checkbox" value="8:30 a 9:00"><label class="hora-turno">8:30 a 9:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-lunes" type="checkbox" value="9:00 a 9:30"><label class="hora-turno">9:00 a 9:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-lunes" type="checkbox" value="9:30 a 10:00"><label class="hora-turno">9:30 a 10:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-lunes" type="checkbox" value="10:00 a 10:30"><label class="hora-turno">10:00 a 10:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-lunes" type="checkbox" value="10:30 a 11:00"><label class="hora-turno">10:30 a 11:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-lunes" type="checkbox" value="11:00 a 11:30"><label class="hora-turno">11:00 a 11:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-lunes" type="checkbox" value="11:30 a 12:00"><label class="hora-turno">11:30 a 12:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-lunes" type="checkbox" value="12:00 a 12:30"><label class="hora-turno">12:00 a 12:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-lunes" type="checkbox" value="12:30 a 13:00"><label class="hora-turno">12:30 a 13:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-lunes" type="checkbox" value="13:00 a 13:30"><label class="hora-turno">13:00 a 13:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-lunes" type="checkbox" value="13:30 a 14:00"><label class="hora-turno">13:30 a 14:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-lunes" type="checkbox" value="14:00 a 14:30"><label class="hora-turno">14:00 a 14:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-lunes" type="checkbox" value="14:30 a 15:00"><label class="hora-turno">14:30 a 15:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-lunes" type="checkbox" value="15:00 a 15:30"><label class="hora-turno">15:00 a 15:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-lunes" type="checkbox" value="15:30 a 16:00"><label class="hora-turno">15:30 a 16:00</label><br>
+                    </div>
+                </div>
+
+                <div class="col"  id="columna-dia-martes">
+                    <input class="btn-horario-laboral" type="checkbox" (click)="switchearMostrarColumna('martes')" id="horarios-martes"><label>Martes</label>
+                    <div class="horarios-semanales" *ngIf="mostrarMartes == true">
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-martes" type="checkbox" value="8:00 a 8:30"><label class="hora-turno">8:00 a 8:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-martes" type="checkbox" value="8:30 a 9:00"><label class="hora-turno">8:30 a 9:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-martes" type="checkbox" value="9:00 a 9:30"><label class="hora-turno">9:00 a 9:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-martes" type="checkbox" value="9:30 a 10:00"><label class="hora-turno">9:30 a 10:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-martes" type="checkbox" value="10:00 a 10:30"><label class="hora-turno">10:00 a 10:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-martes" type="checkbox" value="10:30 a 11:00"><label class="hora-turno">10:30 a 11:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-martes" type="checkbox" value="11:00 a 11:30"><label class="hora-turno">11:00 a 11:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-martes" type="checkbox" value="11:30 a 12:00"><label class="hora-turno">11:30 a 12:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-martes" type="checkbox" value="12:00 a 12:30"><label class="hora-turno">12:00 a 12:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-martes" type="checkbox" value="12:30 a 13:00"><label class="hora-turno">12:30 a 13:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-martes" type="checkbox" value="13:00 a 13:30"><label class="hora-turno">13:00 a 13:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-martes" type="checkbox" value="13:30 a 14:00"><label class="hora-turno">13:30 a 14:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-martes" type="checkbox" value="14:00 a 14:30"><label class="hora-turno">14:00 a 14:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-martes" type="checkbox" value="14:30 a 15:00"><label class="hora-turno">14:30 a 15:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-martes" type="checkbox" value="15:00 a 15:30"><label class="hora-turno">15:00 a 15:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-martes" type="checkbox" value="15:30 a 16:00"><label class="hora-turno">15:30 a 16:00</label><br>
+                    </div>
+                </div>
+
+                <div class="col"  id="columna-dia-miercoles">
+                    <input class="btn-horario-laboral" type="checkbox" (click)="switchearMostrarColumna('miercoles')" id="horarios-miercoles"><label>Miércoles</label>
+                    <div class="horarios-semanales" *ngIf="mostrarMiercoles == true">
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-miercoles" type="checkbox" value="8:00 a 8:30"><label class="hora-turno">8:00 a 8:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-miercoles" type="checkbox" value="8:30 a 9:00"><label class="hora-turno">8:30 a 9:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-miercoles" type="checkbox" value="9:00 a 9:30"><label class="hora-turno">9:00 a 9:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-miercoles" type="checkbox" value="9:30 a 10:00"><label class="hora-turno">9:30 a 10:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-miercoles" type="checkbox" value="10:00 a 10:30"><label class="hora-turno">10:00 a 10:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-miercoles" type="checkbox" value="10:30 a 11:00"><label class="hora-turno">10:30 a 11:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-miercoles" type="checkbox" value="11:00 a 11:30"><label class="hora-turno">11:00 a 11:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-miercoles" type="checkbox" value="11:30 a 12:00"><label class="hora-turno">11:30 a 12:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-miercoles" type="checkbox" value="12:00 a 12:30"><label class="hora-turno">12:00 a 12:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-miercoles" type="checkbox" value="12:30 a 13:00"><label class="hora-turno">12:30 a 13:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-miercoles" type="checkbox" value="13:00 a 13:30"><label class="hora-turno">13:00 a 13:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-miercoles" type="checkbox" value="13:30 a 14:00"><label class="hora-turno">13:30 a 14:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-miercoles" type="checkbox" value="14:00 a 14:30"><label class="hora-turno">14:00 a 14:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-miercoles" type="checkbox" value="14:30 a 15:00"><label class="hora-turno">14:30 a 15:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-miercoles" type="checkbox" value="15:00 a 15:30"><label class="hora-turno">15:00 a 15:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-miercoles" type="checkbox" value="15:30 a 16:00"><label class="hora-turno">15:30 a 16:00</label><br>
+                    </div>
+                </div>
+
+                <div class="col"  id="columna-dia-jueves">
+                    <input class="btn-horario-laboral" type="checkbox" (click)="switchearMostrarColumna('jueves')" id="horarios-jueves"><label>Jueves</label>
+                    <div class="horarios-semanales" *ngIf="mostrarJueves == true">
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-jueves" type="checkbox" value="8:00 a 8:30"><label class="hora-turno">8:00 a 8:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-jueves" type="checkbox" value="8:30 a 9:00"><label class="hora-turno">8:30 a 9:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-jueves" type="checkbox" value="9:00 a 9:30"><label class="hora-turno">9:00 a 9:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-jueves" type="checkbox" value="9:30 a 10:00"><label class="hora-turno">9:30 a 10:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-jueves" type="checkbox" value="10:00 a 10:30"><label class="hora-turno">10:00 a 10:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-jueves" type="checkbox" value="10:30 a 11:00"><label class="hora-turno">10:30 a 11:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-jueves" type="checkbox" value="11:00 a 11:30"><label class="hora-turno">11:00 a 11:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-jueves" type="checkbox" value="11:30 a 12:00"><label class="hora-turno">11:30 a 12:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-jueves" type="checkbox" value="12:00 a 12:30"><label class="hora-turno">12:00 a 12:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-jueves" type="checkbox" value="12:30 a 13:00"><label class="hora-turno">12:30 a 13:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-jueves" type="checkbox" value="13:00 a 13:30"><label class="hora-turno">13:00 a 13:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-jueves" type="checkbox" value="13:30 a 14:00"><label class="hora-turno">13:30 a 14:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-jueves" type="checkbox" value="14:00 a 14:30"><label class="hora-turno">14:00 a 14:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-jueves" type="checkbox" value="14:30 a 15:00"><label class="hora-turno">14:30 a 15:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-jueves" type="checkbox" value="15:00 a 15:30"><label class="hora-turno">15:00 a 15:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-jueves" type="checkbox" value="15:30 a 16:00"><label class="hora-turno">15:30 a 16:00</label><br>
+                    </div>
+                </div>
+
+                <div class="col"  id="columna-dia-viernes">
+                    <input class="btn-horario-laboral" type="checkbox" (click)="switchearMostrarColumna('viernes')" id="horarios-viernes"><label>Viernes</label>
+                    <div class="horarios-semanales" *ngIf="mostrarViernes == true">
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-viernes" type="checkbox" value="8:00 a 8:30"><label class="hora-turno">8:00 a 8:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-viernes" type="checkbox" value="8:30 a 9:00"><label class="hora-turno">8:30 a 9:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-viernes" type="checkbox" value="9:00 a 9:30"><label class="hora-turno">9:00 a 9:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-viernes" type="checkbox" value="9:30 a 10:00"><label class="hora-turno">9:30 a 10:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-viernes" type="checkbox" value="10:00 a 10:30"><label class="hora-turno">10:00 a 10:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-viernes" type="checkbox" value="10:30 a 11:00"><label class="hora-turno">10:30 a 11:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-viernes" type="checkbox" value="11:00 a 11:30"><label class="hora-turno">11:00 a 11:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-viernes" type="checkbox" value="11:30 a 12:00"><label class="hora-turno">11:30 a 12:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-viernes" type="checkbox" value="12:00 a 12:30"><label class="hora-turno">12:00 a 12:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-viernes" type="checkbox" value="12:30 a 13:00"><label class="hora-turno">12:30 a 13:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-viernes" type="checkbox" value="13:00 a 13:30"><label class="hora-turno">13:00 a 13:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-viernes" type="checkbox" value="13:30 a 14:00"><label class="hora-turno">13:30 a 14:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-viernes" type="checkbox" value="14:00 a 14:30"><label class="hora-turno">14:00 a 14:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-viernes" type="checkbox" value="14:30 a 15:00"><label class="hora-turno">14:30 a 15:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-viernes" type="checkbox" value="15:00 a 15:30"><label class="hora-turno">15:00 a 15:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-viernes" type="checkbox" value="15:30 a 16:00"><label class="hora-turno">15:30 a 16:00</label><br>
+                    </div>
+                </div>
+
+                <div class="col"  id="columna-dia-sabado">
+                    <input class="btn-horario-laboral" type="checkbox" (click)="switchearMostrarColumna('sabado')" id="horarios-sabado"><label>Sábado</label>
+                    <div class="horarios-semanales" *ngIf="mostrarSabado == true">
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-sabado" type="checkbox" value="8:00 a 8:30"><label class="hora-turno">8:00 a 8:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-sabado" type="checkbox" value="8:30 a 9:00"><label class="hora-turno">8:30 a 9:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-sabado" type="checkbox" value="9:00 a 9:30"><label class="hora-turno">9:00 a 9:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-sabado" type="checkbox" value="9:30 a 10:00"><label class="hora-turno">9:30 a 10:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-sabado" type="checkbox" value="10:00 a 10:30"><label class="hora-turno">10:00 a 10:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-sabado" type="checkbox" value="10:30 a 11:00"><label class="hora-turno">10:30 a 11:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-sabado" type="checkbox" value="11:00 a 11:30"><label class="hora-turno">11:00 a 11:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-sabado" type="checkbox" value="11:30 a 12:00"><label class="hora-turno">11:30 a 12:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-sabado" type="checkbox" value="12:00 a 12:30"><label class="hora-turno">12:00 a 12:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-sabado" type="checkbox" value="12:30 a 13:00"><label class="hora-turno">12:30 a 13:00</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-sabado" type="checkbox" value="13:00 a 13:30"><label class="hora-turno">13:00 a 13:30</label><br>
+                        <input (mouseover)="checkItem($event)" class="turno-laboral-sabado" type="checkbox" value="13:30 a 14:00"><label class="hora-turno">13:30 a 14:00</label><br>
+                    </div>
+                </div>
+                
+                <button id="btn-autocheck" (click)="guardarHorarioLaboral()">Guardar cambios horarios</button>
+            </div>   
+        </div>
+
+    </div>
+
+    <div class="row" *ngIf="userDataLoaded == true && usuario.tipo == 'paciente'" id="data-paciente" hidden>
+        
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            
+            <div class="col-md-4" id="col5">
+                <img class="foto-usuario" src="{{usuario.foto1}}" width="100%" height="100%">
+            </div>
+
+            <div class="col p-4 d-flex flex-column position-static" id="col6">
+                <p>
+                    Datos personales: <br><br>
+                    <label>Mail: {{usuario.mail}}</label><br>
+                    <label>Nombre: {{usuario.nombre}} {{usuario.apellido}}</label><br>
+                    <label>Edad: {{usuario.edad}} Años</label><br>
+                    <label>DNI: {{usuario.dni}}</label><br>
+                    <label>Usted es <strong>{{usuario.tipo}}</strong></label>
+                </p>
+            </div> 
+
+        </div>
+    </div>
+</div>

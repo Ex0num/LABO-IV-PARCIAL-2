@@ -3,7 +3,7 @@ import { collection, doc, Firestore, getDocs, getFirestore, setDoc, updateDoc } 
 import { getDownloadURL, ref, uploadBytes, uploadString, getStorage } from '@firebase/storage'
 import { Paciente } from '../Entidades/paciente';
 import { environment } from 'src/environments/environment';
-import { administradores, db, especialistas, pacientes, storage } from '../app.component';
+import { administradores, db, especialistas, pacientes, storage, turnos } from '../app.component';
 
 @Injectable({
   providedIn: 'root'
@@ -136,7 +136,13 @@ export class FirebaseService
       dni: dniRecibido,
       foto1: foto1Recibida,
       especialidades: especialidadesRecibidas,
-      estadoCuenta: "inhabilitado"
+      estadoCuenta: "inhabilitado",
+      horarioLunes: [],
+      horarioMartes: [],
+      horarioMiercoles: [],
+      horarioJueves: [],
+      horarioViernes: [],
+      horarioSabado: [],
     }
 
     this.subirFotosEspecialista(especialistaEstructurado.foto1, especialistaEstructurado);
@@ -202,7 +208,13 @@ export class FirebaseService
         dni: doc.data()['dni'],
         foto1: doc.data()['foto1'],
         especialidades: doc.data()['especialidades'],
-        estadoCuenta: doc.data()['estadoCuenta']
+        estadoCuenta: doc.data()['estadoCuenta'],
+        horarioLunes: doc.data()['horarioLunes'],
+        horarioMartes: doc.data()['horarioMartes'],
+        horarioMiercoles: doc.data()['horarioMiercoles'],
+        horarioJueves: doc.data()['horarioJueves'],
+        horarioViernes: doc.data()['horarioViernes'],
+        horarioSabado: doc.data()['horarioSabado'],
       }
 
       arrayEspecialistas.push(user);
@@ -267,11 +279,35 @@ export class FirebaseService
     return idEncontrada;
   }
 
+  public async leerEspecialidades()
+  {
+    let arrayEspecialidades = new Array();
+    let arrayEspecialidadesNoRepetidas = new Array();
+    let arrayEspecialistas = await this.leerEspecialistasDB();
+
+    arrayEspecialistas.forEach( (especialista)=> 
+    { 
+      especialista.especialidades.forEach( (especialidad:any) => 
+      {
+        arrayEspecialidades.push(especialidad);
+      });
+    });
+    
+    arrayEspecialidades.forEach( (element)=> 
+    {
+        if (!arrayEspecialidadesNoRepetidas.includes(element))
+        {
+          arrayEspecialidadesNoRepetidas.push(element);
+        }
+    });
+
+    return arrayEspecialidadesNoRepetidas;
+  }
+
   // ---------------------- ADMINISTRADORES ---------------------------//
 
   public async subirAdministradorDB(mailRecibido:string, passwordRecibido:string, nombreRecibido:string, apellidoRecibido:string, edadRecibida:number, dniRecibido:number, foto1Recibida:string) 
   {
-    
     //Estructuro el administrador
     let administradorEstructurado = 
     {
@@ -296,7 +332,7 @@ export class FirebaseService
     let horaValidaActual = new Date().toLocaleTimeString();
     do { fechaValidaActual = fechaValidaActual.replace("/",":"); } while(fechaValidaActual.includes("/"));
     
-    let referencia = ref(storage, `images/${administradorEstructuradoRecibido.mail + "/" + administradorEstructuradoRecibido.dni + "-" + fechaValidaActual + "-" + horaValidaActual + "-" + "p1"}`);
+    let referencia = ref(storage, `images/${administradorEstructuradoRecibido.mail + "/" + administradorEstructuradoRecibido.dni + "-" + fechaValidaActual + "-" + horaValidaActual + "-" + "v1"}`);
 
     await uploadBytes(referencia, filePhoto1).then(async (snapshot)=>
     {
@@ -340,7 +376,12 @@ export class FirebaseService
       let user = 
       {
         mail: doc.data()['mail'],
-        password: doc.data()['password']
+        password: doc.data()['password'],
+        nombre: doc.data()['nombre'],
+        apellido: doc.data()['apellido'],
+        foto1: doc.data()['foto1'],
+        edad: doc.data()['edad'],
+        dni: doc.data()['dni'],
       }
 
       arrayAdministradores.push(user);
@@ -348,5 +389,79 @@ export class FirebaseService
 
     console.log(arrayAdministradores);
     return arrayAdministradores;
+  }
+
+  // ---------------------- TURNOS ---------------------------//
+
+  public async leerTurnosDB()
+  {
+    let arrayTurnos = new Array();
+
+    const querySnapshot = await getDocs(turnos);
+    querySnapshot.forEach((doc) => 
+    {
+      //creo el usuario y le agrego la data
+      let turno = 
+      {
+        especialista: doc.data()['especialista'],
+        paciente: doc.data()['paciente']
+      }
+
+      arrayTurnos.push(turno);
+    });
+
+    console.log(arrayTurnos);
+    return arrayTurnos;
+  }
+
+  public async leerTurnosByMailDB(mailRecibido:string)
+  {
+    let arrayTurnos = new Array();
+
+    const querySnapshot = await getDocs(turnos);
+    querySnapshot.forEach((doc) => 
+    {
+      //creo el usuario y le agrego la data
+      let turno = 
+      {
+        especialista: doc.data()['especialista'],
+        paciente: doc.data()['paciente']
+      }
+
+      arrayTurnos.push(turno);
+    });
+
+    let arrayTurnosFiltrado = arrayTurnos.filter( (a)=>{ if (a.mail == mailRecibido){return 0} else {return -1}});
+
+    return arrayTurnosFiltrado;
+  }
+
+  // ------------------------- USUARIOS ----------------------//
+
+  public async buscarUsuarioByMail(mailRecibido:any)
+  {
+    let administradores = await this.leerAdministradoresDB();
+    let especialistas = await this.leerEspecialistasDB();
+    let pacientes = await this.leerPacientesDB();
+
+    administradores = administradores.filter((a)=>{if (a.mail == mailRecibido){return -1}else{return 0}});
+    especialistas = especialistas.filter((a)=>{if (a.mail == mailRecibido){return -1}else{return 0}});
+    pacientes = pacientes.filter((a)=>{if (a.mail == mailRecibido){return -1}else{return 0}});
+
+    if (administradores.length > 0)
+    {
+      administradores[0].tipo = "administrador";
+      return administradores[0];
+    }
+    else if (especialistas.length > 0)
+    {
+      especialistas[0].tipo = "especialista";
+      return especialistas[0];
+    }
+    else if (pacientes.length > 0)
+    {
+      pacientes[0].tipo = "paciente";
+      return pacientes[0];
+    }
   }
 }

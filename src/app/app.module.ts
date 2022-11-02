@@ -9,6 +9,7 @@ import { RegisterComponent } from './Vistas/register/register.component';
 import { FormsModule } from '@angular/forms';
 import { VerificacionMailComponent } from './Vistas/verificacion-mail/verificacion-mail.component';
 import { UsuariosComponent } from './Vistas/usuarios/usuarios.component';
+import { MiPerfilComponent } from './Vistas/mi-perfil/mi-perfil.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { UsuariosComponent } from './Vistas/usuarios/usuarios.component';
     LoginComponent,
     RegisterComponent,
     VerificacionMailComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    MiPerfilComponent,
   ],
   imports: [
     BrowserModule,
