@@ -404,7 +404,13 @@ export class FirebaseService
       let turno = 
       {
         especialista: doc.data()['especialista'],
-        paciente: doc.data()['paciente']
+        paciente: doc.data()['paciente'],
+        estado: doc.data()['estado'],
+        info: doc.data()['info'],
+        especialidad: doc.data()['especialidad'],
+        solicitado: doc.data()['solicitado'],
+        resena: doc.data()['resena'],
+        comentario: doc.data()['comentario'],
       }
 
       arrayTurnos.push(turno);
@@ -414,7 +420,31 @@ export class FirebaseService
     return arrayTurnos;
   }
 
-  public async leerTurnosByMailDB(mailRecibido:string)
+  public async subirTurnoDB(especialidadRecibida:any, especialistaRecibido:any, fechaTurnoRecibida:any, mailPacienteRecibido:any, resenaRecibido:any) 
+  {
+    let fecha = new Date();
+    let fechaActual = fecha.toLocaleTimeString();
+
+    let turnoEstructurado = 
+    {
+      especialista: especialistaRecibido,
+      estado: 'pendiente',
+      especialidad: especialidadRecibida,
+      info: fechaTurnoRecibida,
+      paciente: mailPacienteRecibido,
+      solicitado: fechaActual,
+      resena: '',
+      comentario: ''
+    }
+
+    let lastId = this.getLastIDTurnos();
+    let newID = await lastId + 1;
+
+    let newDocument = doc(db, "turnos", newID.toString());
+    await setDoc(newDocument, turnoEstructurado);
+  }
+
+  public async leerTurnosByMailDB(mailpacienteRecibido:string)
   {
     let arrayTurnos = new Array();
 
@@ -425,16 +455,99 @@ export class FirebaseService
       let turno = 
       {
         especialista: doc.data()['especialista'],
-        paciente: doc.data()['paciente']
+        paciente: doc.data()['paciente'],
+        estado: doc.data()['estado'],
+        info: doc.data()['info'],
+        especialidad: doc.data()['especialidad'],
+        solicitado: doc.data()['solicitado'],
+        resena: doc.data()['resena'],
+        comentario: doc.data()['comentario'],
       }
 
       arrayTurnos.push(turno);
     });
 
-    let arrayTurnosFiltrado = arrayTurnos.filter( (a)=>{ if (a.mail == mailRecibido){return 0} else {return -1}});
+    let arrayTurnosFiltrado = arrayTurnos.filter( (a)=>{ if (a.paciente == mailpacienteRecibido){return -1} else {return 0}});
+    console.log("ARRAY TURNOS FILTRADO:");
+    console.log(arrayTurnosFiltrado);
 
     return arrayTurnosFiltrado;
   }
+
+  private async getLastIDTurnos()
+  {
+    let querySnapshot = getDocs(turnos);
+    let flagMax = 0;
+
+    (await ((querySnapshot))).docs.forEach((doc) => 
+    {
+      if (parseInt(doc.id) > flagMax)
+      {
+        flagMax = parseInt(doc.id);
+      }
+    });
+
+    console.log(flagMax);
+    return flagMax;
+  }
+
+  public async obtenerIDTurnoPorFechaYEstado(infoRecibida:string, estadoRecibido:string)
+  {
+    const querySnapshot = await getDocs(turnos);
+
+    let idEncontrada = -1;
+
+    querySnapshot.forEach((doc) => 
+    {
+        if (doc.data()["info"] == infoRecibida && doc.data()["estado"] == estadoRecibido)
+        {
+          idEncontrada = parseInt(doc.id);
+        }
+    });
+
+    return idEncontrada;
+  }
+
+  
+  public async setearEstadoyComentarioTurno(fechaRecibida:string, estadoViejo:string, estadoTurnoRecibido:string, comentarioRecibido:string)
+  {
+    let turnoEncontrado = await this.buscarTurnoPorFechaYEstado(fechaRecibida,estadoViejo); 
+    console.log(turnoEncontrado);
+
+    turnoEncontrado[0].estado = estadoTurnoRecibido;
+    turnoEncontrado[0].comentario = comentarioRecibido;
+
+    let idDoc = await this.obtenerIDTurnoPorFechaYEstado(turnoEncontrado[0].info,estadoViejo);
+    console.log(idDoc);
+    this.modificarTurno(turnoEncontrado[0], idDoc);
+
+  }
+
+  modificarTurno(turnoEstructuradoRecibido:any, idTurnoRecibido:number)
+  {
+    let docRef = doc(db, `turnos/${idTurnoRecibido}`);
+    return updateDoc(docRef, turnoEstructuradoRecibido);
+  }
+
+  public async buscarTurnoPorFechaYEstado(fechaRecibida:string, estadoRecibido:string)
+  {
+    let arrayLeidoDeTurnos = await this.leerTurnosDB();
+  
+    let arrayFiltrado = arrayLeidoDeTurnos.filter( (a)=> 
+    { if (a.info == fechaRecibida && a.estado == estadoRecibido)
+      {
+        return -1;
+      }
+      else
+      {
+        return 0;
+      }
+    }
+    );
+
+    return arrayFiltrado;
+  }
+
 
   // ------------------------- USUARIOS ----------------------//
 

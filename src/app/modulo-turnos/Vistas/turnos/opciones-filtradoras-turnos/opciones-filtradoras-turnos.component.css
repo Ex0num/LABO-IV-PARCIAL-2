@@ -1,4 +1,4 @@
-#btn-filtro-especialista, #btn-filtro-especialidad
+#btn-filtro-especialista, #btn-filtro-especialidad, #btn-limpiar-filtro
 {
     font-size: 20px;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -15,9 +15,15 @@
     margin-left: 1.8rem;
 }
 
-#btn-filtro-especialista:hover, #btn-filtro-especialidad:hover, .item-especialista:hover
+#btn-filtro-especialista:hover, #btn-filtro-especialidad:hover, .item-especialista:hover, #btn-limpiar-filtro:hover
 {
   background-color: #556e78;
+}
+
+#btn-limpiar-filtro
+{
+    width: 98%;
+    margin-top: 0.5rem;
 }
 
 #container-opciones-filtradoras
@@ -35,7 +41,7 @@
 #opciones-especialistas
 {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    max-height: 8rem;
+    height: 10rem;
     overflow: auto;
 }
 
@@ -72,13 +78,13 @@
 
 #opciones-especialidades
 {
-    max-height: 8rem;
+    height: 10rem;
     overflow: auto;
 }
 
 @media (max-width: 1100px) 
 {
-    #btn-filtro-especialista, #btn-filtro-especialidad
+    #btn-filtro-especialista, #btn-filtro-especialidad, #btn-limpiar-filtro
     {
         width: 90%;
         margin-top: 0.5rem;

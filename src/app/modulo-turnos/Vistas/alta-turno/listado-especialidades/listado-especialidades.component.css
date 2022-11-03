@@ -1,0 +1,27 @@
+.item-especialidad
+{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-top: 0.5rem;
+    height: 2rem;
+    border-radius: 4px;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    padding-top: 0.2rem;
+    font-size: 19px;
+}
+
+.item-especialidad:hover
+{
+    background-color: #556e78;
+}
+
+#opciones-especialidades
+{
+    height: 13.5rem;
+    overflow: auto;
+}
+
+li
+{
+    list-style: none;
+}

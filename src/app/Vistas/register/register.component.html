@@ -29,41 +29,58 @@
     
                 <div class="card-body cardbody-color p-lg-5">   
                 
-                    <form>   
+                    <form [formGroup]="formaPaciente" (ngSubmit)="registrarPaciente()">   
                         <div class="row">
                             
-                            <input [(ngModel)]="mailIngresado" [ngModelOptions]="{standalone: true}" type="mail" class="form-control" id="mail-paciente" placeholder="Mail">
-                            <input [(ngModel)]="passwordIngresado" [ngModelOptions]="{standalone: true}" type="password" class="form-control" id="password-paciente" placeholder="Password">
-                            <input [(ngModel)]="passwordConfirmIngresado" [ngModelOptions]="{standalone: true}" type="password" class="form-control" id="passwordconfirm-paciente" placeholder="Password confirmada">
+                            <input [(ngModel)]="mailIngresado" type="mail" class="form-control" id="mail-paciente" placeholder="Mail" formControlName="mail">
+                            <small class="invalid" *ngIf="formaPaciente.controls?.['mail'].errors?.required && formaPaciente.controls?.['mail'].touched">El nombre es requerido</small>
                             
+                            <input [(ngModel)]="passwordIngresado" type="password" class="form-control" id="password-paciente" placeholder="Password" formControlName="password">
+                            <small class="invalid" *ngIf="formaPaciente.controls?.['password'].errors?.required && formaPaciente.controls?.['password'].touched">El nombre es requerido</small>
+
+                            <input [(ngModel)]="passwordConfirmIngresado" type="password" class="form-control" id="passwordconfirm-paciente" placeholder="Password confirmada" formControlName="passwordConfirm">
+                            <small class="invalid" *ngIf="formaPaciente.controls?.['passwordConfirm'].errors?.required && formaPaciente.controls?.['passwordConfirm'].touched">El nombre es requerido</small>
+
                             <div class="col">
-                                <input [(ngModel)]="nombreIngresado" [ngModelOptions]="{standalone: true}" type="nombre" class="form-control" id="nombre-paciente" placeholder="Nombre">
+                                <input [(ngModel)]="nombreIngresado" type="nombre" class="form-control" id="nombre-paciente" placeholder="Nombre" formControlName="nombre">
+                                <small class="invalid" *ngIf="formaPaciente.controls?.['nombre'].errors?.required && formaPaciente.controls?.['nombre'].touched">El nombre es requerido</small>
                             </div>
    
                             <div class="col">
-                                <input [(ngModel)]="apellidoIngresado" [ngModelOptions]="{standalone: true}" type="apellido" class="form-control" id="apellido-paciente" placeholder="Apellido">       
+                                <input [(ngModel)]="apellidoIngresado" type="apellido" class="form-control" id="apellido-paciente" placeholder="Apellido" formControlName="apellido">
+                                <small class="invalid" *ngIf="formaPaciente.controls?.['apellido'].errors?.required && formaPaciente.controls?.['apellido'].touched">El apellido es requerido</small>       
                             </div>
                              
                             <div class="col">
-                                <input [(ngModel)]="edadIngresada" [ngModelOptions]="{standalone: true}" type="number" class="form-control" id="edad-paciente" placeholder="Edad">
+                                <input [(ngModel)]="edadIngresada" type="number" class="form-control" id="edad-paciente" placeholder="Edad" formControlName="edad">
+                                <small class="invalid" *ngIf="formaPaciente.controls?.['edad'].errors?.required && formaPaciente.controls?.['edad'].touched">La edad es requerida</small>
                             </div>
                            
-                            <input [(ngModel)]="dniIngresado" [ngModelOptions]="{standalone: true}" type="number" class="form-control" id="dni-paciente" placeholder="DNI">                        
+                            <input [(ngModel)]="dniIngresado" type="number" class="form-control" id="dni-paciente" placeholder="DNI" formControlName="dni">                        
+                            <small class="invalid" *ngIf="formaPaciente.controls?.['dni'].errors?.required && formaPaciente.controls?.['dni'].touched">El DNI es requerido</small>
 
                             <div class="col">
                                 <label class="custom-file-upload">
-                                    <input type="file" size="20" accept="image/png,image/jpeg" class="form-item" id="file-input1-paciente"   (change)="fotoPacienteSubida($event, 1)">     
+                                    <input type="file" size="20" accept="image/png,image/jpeg" class="form-item" id="file-input1-paciente"   (change)="fotoPacienteSubida($event, 1)" formControlName="foto1">     
+                                    <small class="invalid" *ngIf="formaPaciente.controls?.['foto1'].errors?.required && formaPaciente.controls?.['foto1'].touched">La 1° foto es requerida</small>
                                 </label>
                             </div>
 
                             <div class="col">
                                 <label class="custom-file-upload">
-                                    <input type="file" size="20" accept="image/png,image/jpeg" class="form-item" id="file-input2-paciente"   (change)="fotoPacienteSubida($event, 2)">     
+                                    <input type="file" size="20" accept="image/png,image/jpeg" class="form-item" id="file-input2-paciente"   (change)="fotoPacienteSubida($event, 2)" formControlName="foto2">     
+                                    <small class="invalid-fotos" *ngIf="formaPaciente.controls?.['foto2'].errors?.required && formaPaciente.controls?.['foto2'].touched">La 2° foto es requerida</small>
                                 </label>
+                            </div>
+
+                            <div class="row">
+                                <input readonly [(ngModel)]="captchaGenerado" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="captcha-generado">                        
+                                <input [(ngModel)]="captchaIngresado" type="text" class="form-control" id="captcha-ingresado" placeholder="Ingrese el mensaje que visualiza" formControlName="captcha">                        
+                                <small class="invalid-fotos" *ngIf="formaPaciente.controls?.['captcha'].errors?.required && formaPaciente.controls?.['captcha'].touched">El captcha es invalido</small>   
                             </div>
                     
                             <div class="row">
-                                <button type="submit" id="btn-registrar-paciente" (click)="registrarPaciente()">Registrar</button>
+                                <button type="submit" id="btn-registrar-paciente">Registrar</button>
                             </div>
                         </div> 
                     </form>
@@ -81,34 +98,46 @@
     
                 <div class="card-body cardbody-color p-lg-5">   
                 
-                    <form>   
+                    <form [formGroup]="formaEspecialista" (ngSubmit)="registrarEspecialista()">   
                         <div class="row">
                             
-                            <input [(ngModel)]="mailEspecialistaIngresado" [ngModelOptions]="{standalone: true}" type="mail" class="form-control" id="mail-especialista" placeholder="Mail">
-                            <input [(ngModel)]="passwordEspecialistaIngresado" [ngModelOptions]="{standalone: true}" type="password" class="form-control" id="password-especialista" placeholder="Password">
-                            <input [(ngModel)]="passwordEspecialistaConfirmIngresado" [ngModelOptions]="{standalone: true}" type="password" class="form-control" id="passwordconfirm-especialista" placeholder="Password confirmada">
-                            
+                            <input [(ngModel)]="mailEspecialistaIngresado" type="mail" class="form-control" id="mail-especialista" placeholder="Mail" formControlName="mail">
+                            <small class="invalid" *ngIf="formaEspecialista.controls?.['mail'].errors?.required && formaEspecialista.controls?.['mail'].touched">El mail es requerido</small>
+
+                            <input [(ngModel)]="passwordEspecialistaIngresado" type="password" class="form-control" id="password-especialista" placeholder="Password" formControlName="password">
+                            <small class="invalid" *ngIf="formaEspecialista.controls?.['password'].errors?.required && formaEspecialista.controls?.['password'].touched">La contraseña es requerida</small>
+
+                            <input [(ngModel)]="passwordEspecialistaConfirmIngresado" type="password" class="form-control" id="passwordconfirm-especialista" placeholder="Password confirmada" formControlName="passwordConfirm">
+                            <small class="invalid" *ngIf="formaEspecialista.controls?.['passwordConfirm'].errors?.required && formaEspecialista.controls?.['passwordConfirm'].touched">La confirmación de contraseña es requerida</small>
+
                             <div class="col">
-                                <input [(ngModel)]="nombreEspecialistaIngresado" [ngModelOptions]="{standalone: true}" type="nombre" class="form-control" id="nombre-especialista" placeholder="Nombre">
+                                <input [(ngModel)]="nombreEspecialistaIngresado" type="nombre" class="form-control" id="nombre-especialista" placeholder="Nombre" formControlName="nombre">
+                                <small class="invalid" *ngIf="formaEspecialista.controls?.['nombre'].errors?.required && formaEspecialista.controls?.['nombre'].touched">El nombre es requerido</small>
                             </div>
    
                             <div class="col">
-                                <input [(ngModel)]="apellidoEspecialistaIngresado" [ngModelOptions]="{standalone: true}" type="apellido" class="form-control" id="apellido-especialista" placeholder="Apellido">       
+                                <input [(ngModel)]="apellidoEspecialistaIngresado" type="apellido" class="form-control" id="apellido-especialista" placeholder="Apellido" formControlName="apellido">       
+                                <small class="invalid" *ngIf="formaEspecialista.controls?.['apellido'].errors?.required && formaEspecialista.controls?.['apellido'].touched">El apellido es requerido</small>
                             </div>
                              
                             <div class="col">
-                                <input [(ngModel)]="edadEspecialistaIngresada" [ngModelOptions]="{standalone: true}" type="number" class="form-control" id="edad-especialista" placeholder="Edad">
+                                <input [(ngModel)]="edadEspecialistaIngresada" type="number" class="form-control" id="edad-especialista" placeholder="Edad" formControlName="edad">
+                                <small class="invalid" *ngIf="formaEspecialista.controls?.['edad'].errors?.required && formaEspecialista.controls?.['edad'].touched">La edad es requerida</small>
                             </div>
                            
-                            <input [(ngModel)]="dniEspecialistaIngresado" [ngModelOptions]="{standalone: true}" type="number" class="form-control" id="dni-especialista" placeholder="DNI">                        
+                            <input [(ngModel)]="dniEspecialistaIngresado" type="number" class="form-control" id="dni-especialista" placeholder="DNI" formControlName="dni">                        
+                            <small class="invalid" *ngIf="formaEspecialista.controls?.['dni'].errors?.required && formaEspecialista.controls?.['dni'].touched">El dni es requerido</small>
 
                             <div class="col">
                                 <label class="custom-file-upload">
-                                    <input type="file" size="20" accept="image/png,image/jpeg" class="form-item" id="file-input1-paciente"   (change)="fotoEspecialistaSubida($event)">     
+                                    <input type="file" size="20" accept="image/png,image/jpeg" class="form-item" id="file-input1-paciente" (change)="fotoEspecialistaSubida($event)" formControlName="foto1">     
+                                    <small class="invalid" *ngIf="formaEspecialista.controls?.['foto1'].errors?.required && formaEspecialista.controls?.['foto1'].touched">La 1° foto es requerida</small>
                                 </label>
                             </div>
 
-                            <input readonly placeholder="Elija sus especialidades" id="especialidades-elegidas" value="{{especialidadesSeleccionadas}}">
+                            <input readonly placeholder="Elija sus especialidades" id="especialidades-elegidas" value="{{especialidadesSeleccionadas}}" formControlName="especialidades">
+                            <small class="invalid" *ngIf="formaEspecialista.controls?.['especialidades'].errors?.required && formaEspecialista.controls?.['especialidades'].touched">La especialidad es requerida</small>
+                            
                             <button id="btn-borrar-especialidades" (click)="limpiarEspecialidades()">✘</button>
 
                              <div class="multiple_select_checkbox">
@@ -124,8 +153,14 @@
                              <input placeholder="Escríbala si no la pudo encontrar" type="text" id="especialidades-agregadas" [(ngModel)]="especialidadAgregada" [ngModelOptions]="{standalone: true}">  
                              <button id="btn-agregar-especialidad" (click)="agregarEspecialidad()">↑</button>            
                     
+                             <div class="col">
+                                <input readonly [(ngModel)]="captchaGenerado" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="captcha-generado">                        
+                                <input [(ngModel)]="captchaIngresado" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="captcha-ingresado" placeholder="Ingrese el mensaje que visualiza">                        
+                                <small class="invalid" *ngIf="formaEspecialista.controls?.['captcha'].errors?.required && formaEspecialista.controls?.['captcha'].touched">El captcha es requerido</small>
+                            </div>
+
                             <div class="row">
-                                <button type="submit" id="btn-registrar-especialista" (click)="registrarEspecialista()">Registrar</button>
+                                <button type="submit" id="btn-registrar-especialista">Registrar</button>
                             </div>
                         </div> 
                     </form>

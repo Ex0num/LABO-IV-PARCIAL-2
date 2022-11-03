@@ -54,6 +54,33 @@ a{
   border-radius: 15px;
 }
 
+#captcha-generado
+{
+  font-style: italic;
+  text-decoration: dashed;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+#captcha-ingresado, #captcha-generado
+{
+  text-align: center;
+}
+
+.invalid
+{
+  color: red;
+  text-align: center;
+}
+
+.invalid-fotos
+{
+  color: red;
+  text-align: center;
+  margin-left: 25px;
+}
+
 /* FORM PACIENTE */
 #nombre-paciente, #apellido-paciente, #edad-paciente, #dni-paciente, #mail-paciente, #password-paciente,  #passwordconfirm-paciente
 {

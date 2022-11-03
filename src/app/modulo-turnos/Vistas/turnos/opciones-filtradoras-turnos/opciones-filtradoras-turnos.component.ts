@@ -24,10 +24,17 @@ export class OpcionesFiltradorasTurnosComponent implements OnInit {
   arrayEspecialistas:any;
   arrayEspecialidades:any;
 
-  opcionClickeadaEvent(opcion:any, tipo:any)
+  opcionClickeadaEvent(dataRecibida:any, tipoRecibido:any)
   {
     console.log("ENVIANDO EVENTO");
-    this.opcionClickeada.emit(opcion);
+
+    let infoFiltro = 
+    {
+      data: dataRecibida,
+      tipo: tipoRecibido,
+    }
+
+    this.opcionClickeada.emit(infoFiltro);
   }
 
   actualizarFiltro(filtracionRecibida:string)

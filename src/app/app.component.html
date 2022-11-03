@@ -8,8 +8,8 @@
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0" id="header-ul">
           <li *ngIf="isLoged == true && isAdmin == true" class="opcion-seccion"><a href="/usuarios" class="nav-link px-2 text-white">Usuarios</a></li>
-          <li *ngIf="isLoged == true" class="opcion-seccion"><a href="/misturnos" class="nav-link px-2 text-white">Mis turnos</a></li>
-          <li *ngIf="isLoged == true && isPaciente == true" class="opcion-seccion"><a href="/solicitarturno" class="nav-link px-2 text-white">Solicitar turno</a></li>
+          <li *ngIf="isLoged == true && (isPaciente == true || isEspecialista == true)" class="opcion-seccion"><a href="/misturnos" class="nav-link px-2 text-white">Mis turnos</a></li>
+          <li *ngIf="isLoged == true && (isPaciente == true || isAdmin == true)" class="opcion-seccion"><a href="/solicitarturno" class="nav-link px-2 text-white">Solicitar turno</a></li>
         </ul>
 
         <div class="text-end" *ngIf="isLoged == true">

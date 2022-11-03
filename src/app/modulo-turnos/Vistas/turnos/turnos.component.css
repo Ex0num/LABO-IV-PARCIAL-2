@@ -1,9 +1,17 @@
 #contenedor-absoluto
 {
     margin-top: 2rem;
-    height: 38rem;
+    height: 42rem;
     background-color: #425b65;
     color: white;
+}
+
+#comentario-cancelacion
+{
+    height: 5rem;
+    max-height: 5rem;
+    border-radius: 4px;
+    margin-top: 0.5;
 }
 
 #col1
@@ -22,6 +30,36 @@
     width: 100%;
 }
 
+#opciones-turnos
+{
+    text-align: center;
+    height: 15.7rem;
+    overflow: auto;
+}
+
+.item-turno
+{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    text-align: center;
+    margin-top: 0.5rem;
+    height: 2rem;
+    border-radius: 4px;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    padding-top: 0.2rem;
+    font-size: 19px;
+}
+
+.item-turno:hover
+{
+    background-color: #556e78;
+}
+
+li
+{
+    list-style: none;
+}
+
 #titulo-principal, #titulo-principal2
 {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -32,6 +70,18 @@
     text-align: center;
     width: 35%;
     color: white;
+}
+
+.btn-accion-turno
+{
+    font-size: 20px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    border: 1px solid white;
+    background-color: #425b65;
+    border-radius: 5px;
+    width: 100%;
+    color: white;
+    margin-top: 0.5rem;
 }
 
 @media (max-width: 1100px) 

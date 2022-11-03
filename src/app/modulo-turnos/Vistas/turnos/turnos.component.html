@@ -7,13 +7,25 @@
             <div class="col-md-4" id="listado-turnos">
                 <div class="col p-4 d-flex flex-column position-static">
                    
-                    <ul>
-                        <li *ngFor="let turno of listadoTurnosPacienteLogeado; let i = index">
-                            <label>{{turno.especialista}}</label>
-                        </li>
-                        
+                    <ul id="opciones-turnos">
+                        <li *ngFor="let turno of listadoTurnosPacienteLogeado; let i = index" class="item-turno" (click)="turnoClickeado(turno)">
+                            <label>{{turno.info}} - <strong>{{turno.estado}}</strong></label>
+                        </li>         
                     </ul>
 
+                    <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && estadoTurno != 'realizado' && estadoTurno != 'cancelado' " (click)="cancelarTurno()">Cancelar</button>
+                    <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && (resenaTurno != undefined && resenaTurno != '' )" (click)="verResena()">Ver reseña</button>
+                    <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && estadoTurno == 'realizado' && (resenaTurno != undefined && resenaTurno != '' )">Completar encuesta</button>
+                    <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && estadoTurno == 'realizado'">Calificar atención</button>
+
+                    <textarea readonly id="comentario-resena" *ngIf="turnoSeleccionado == true && resenaTurnoHabilitado == true">{{textoResena}}</textarea>
+
+                    <!-- <textarea id="comentario-encuesta" *ngIf="turnoSeleccionado == true && comentarioTurnoHabilitado == true"></textarea>
+                    <button class="btn-enviar-encuesta" *ngIf="turnoSeleccionado == true && comentarioTurnoHabilitado == true" (click)="enviarEncuesta()">Enviar encuesta</button>
+         -->
+                    <input id="comentario-cancelacion" *ngIf="turnoSeleccionado == true && comentarioTurnoHabilitado == true" [(ngModel)]="comentarioIngresado">
+                    <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && comentarioTurnoHabilitado == true" (click)="procederCancelacion()">Enviar y cancelar</button>
+        
                 </div>
             </div>
         </div>

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { AuthService } from 'src/app/Servicios/auth.service';
+import { CaptchaService } from 'src/app/Servicios/captcha.service';
 import { FirebaseService } from 'src/app/Servicios/firebase.service';
 
 @Component({
@@ -17,6 +19,9 @@ export class RegisterComponent implements OnInit {
   public seleccionandoRegistro = true;
   public registroEspecialista = false;
   public registroPaciente = false;
+
+  public captchaGenerado = "";
+  public captchaIngresado = "";
 
   // ------------------- VARIABLES PACIENTE ------------------------
   public mailIngresado:any;
@@ -39,8 +44,71 @@ export class RegisterComponent implements OnInit {
   public dniEspecialistaIngresado:any;
   public foto1EspecialistaIngresada:any;
 
-  constructor(public routerRecieved:Router, public srvFirebase:FirebaseService, public srvAuth:AuthService) {}
-  ngOnInit(): void {}
+  constructor(public routerRecieved:Router, public srvFirebase:FirebaseService, public srvAuth:AuthService, public srvCaptcha:CaptchaService, private formBuilder:FormBuilder) {}
+  
+  formaPaciente:FormGroup | any;
+  formaEspecialista:FormGroup | any;
+
+  ngOnInit(): void 
+  {
+    this.captchaGenerado = this.srvCaptcha.pickearPalabraRandom();
+
+    this.formaPaciente = this.formBuilder.group({
+      'nombre' : ['', [Validators.required]],
+      'apellido' : ['', [Validators.required]],
+      'foto1' : ['', [Validators.required]],
+      'foto2' : ['', [Validators.required]],
+      'mail' : ['', [Validators.required]],
+      'dni' : ['', [Validators.required], this.esDNILargoValido],
+      'edad' : ['', [Validators.required, Validators.min(18), Validators.max(99)]],
+      'password' : ['', [Validators.required]],
+      'passwordConfirm' : ['', [Validators.required]],
+      'captcha' : ['', [Validators.required]],
+    });
+
+    this.formaEspecialista = this.formBuilder.group({
+      'nombre' : ['', [Validators.required]],
+      'especialidades' : ['', [Validators.required]],
+      'apellido' : ['', [Validators.required]],
+      'foto1' : ['', [Validators.required]],
+      'mail' : ['', [Validators.required]],
+      'dni' : ['', [Validators.required], this.esDNILargoValido],
+      'edad' : ['', [Validators.required, Validators.min(18), Validators.max(99)]],
+      'password' : ['', [Validators.required]],
+      'passwordConfirm' : ['', [Validators.required]],
+      'captcha' : ['', [Validators.required]],
+    });
+  }
+
+  private async esDNILargoValido(control:AbstractControl): Promise<object | null>
+  {
+    const numero = <number>control.value
+
+    if (numero.toString().length > 8)
+    {
+      return {esLargoValido: false};
+    }
+    else
+    {
+      return null;
+    }
+  }
+
+  // private async esCaptchaValido(control:AbstractControl): Promise<object | null>
+  // {
+  //   let captchaIngresado = <string>control.value;
+
+  //   if (captchaIngresado.toUpperCase() != this.captchaGenerado)
+  //   {
+  //     return {esCaptchaValido: false};
+  //   }
+  //   else
+  //   {
+  //     return null;
+  //   }
+  // }
+
+  
 
   // ------------------------ METODOS PACIENTE ---------------------
   async registrarPaciente()
