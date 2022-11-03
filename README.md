@@ -78,7 +78,7 @@ administración de la misma.<br>
 
 ***
 <h3 id="requerimientosExcluyentes">Requerimientos excluyentes</h3>
-<img src="src/assets/requerimientos.PNG" width="100%" height="5rem">
+<img src="src/assets/readme-files/requerimientos.PNG" width="100%" height="300px">
 
 ***
 <h3 id="requerimientosPorFecha">Requerimientos por fechas de entrega</h3>
@@ -242,4 +242,8 @@ El captcha, puede ser el de google o uno propio, debemos incorporarlo en el regi
 El Readme debe contener una explicación de la Clínica, pantallas, formas de acceder a las diferentes
 secciones y que contiene cada sección.
 
+***
 <h3 id="manualDeUso">Manual de uso</h3>
+
+<label>¿Cómo solicito un turno?</label>
+<img src="src/assets/readme-files/solicitar-turno.gif" width="100%" height="300px">
