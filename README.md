@@ -245,5 +245,12 @@ secciones y que contiene cada sección.
 ***
 <h3 id="manualDeUso">Manual de uso</h3>
 
-<label>¿Cómo solicito un turno?</label>
-<img src="src/assets/readme-files/solicitar-turno.gif" width="100%" height="300px">
+<strong>¿Cómo solicito un turno?</strong>
+<img src="src/assets/readme-files/solicitar-turno.gif" width="100%" height="450px">
+
+<strong>¿Cómo cancelo un turno?</strong>
+<img src="src/assets/readme-files/cancelar-turno.gif" width="100%" height="450px">
+
+<strong>¿Cómo inicio sesión?</strong>
+<img src="src/assets/readme-files/iniciar-sesion.gif" width="100%" height="450px">
+
