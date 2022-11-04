@@ -254,5 +254,5 @@ secciones y que contiene cada sección.
 <strong> - ¿Cómo inicio sesión?</strong>
 <img src="src/assets/readme-files/iniciar-sesion.gif" width="100%" height="450px">
 
-<strong> - Siendo un médico, ¿Cómo defino mi horario labora?</strong>
+<strong> - Siendo un médico, ¿Cómo defino mi horario laboral?</strong>
 <img src="src/assets/readme-files/definir-horario-laboral.gif" width="100%" height="450px">

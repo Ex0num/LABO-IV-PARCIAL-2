@@ -7,6 +7,7 @@ import { OnlyLogedAccountGuard } from './Guardianes/only-loged-account.guard';
 import { OnlyNotVerifiedMailGuard } from './Guardianes/only-not-verified-mail.guard';
 import { OnlyVerifiedMailGuard } from './Guardianes/only-verified-mail.guard';
 import { AltaTurnoComponent } from './modulo-turnos/Vistas/alta-turno/alta-turno.component';
+import { TotalidadTurnosComponent } from './modulo-turnos/Vistas/totalidad-turnos/totalidad-turnos.component';
 import { TurnosComponent } from './modulo-turnos/Vistas/turnos/turnos.component';
 import { BienvenidaComponent } from './Vistas/bienvenida/bienvenida.component';
 import { LoginComponent } from './Vistas/login/login.component';
@@ -25,7 +26,10 @@ const routes: Routes = [
   
   /*Solo acceden cuentas que esten en el listado de administradores*/
   {path:'usuarios',component:UsuariosComponent, canActivate: [OnlyLogedAccountGuard, OnlyAdminGuard]},
-  
+
+  /*Solo acceden cuentas que esten en el listado de administradores*/
+  {path:'totalidadturnos',component:TotalidadTurnosComponent, canActivate: [OnlyLogedAccountGuard, OnlyAdminGuard]},
+
   /*Solo acceden cuentas logeadas, con mail verificado y (en caso de especialista) habilitado por un admin*/
   {path:'misturnos',component:TurnosComponent, canActivate: [OnlyLogedAccountGuard, OnlyVerifiedMailGuard, OnlyAvailableAccountGuard] ,loadChildren: () => import('./modulo-turnos/modulo-turnos.module').then(m => m.ModuloTurnosModule)},
   

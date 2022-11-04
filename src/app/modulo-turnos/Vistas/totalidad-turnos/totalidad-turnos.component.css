@@ -1,7 +1,7 @@
-#contenedor-absoluto, #contenedor-absoluto-especialista
+#contenedor-absoluto
 {
     margin-top: 2rem;
-    height: 42rem;
+    height: 52rem;
     background-color: #425b65;
     color: white;
 }
@@ -14,14 +14,14 @@
     margin-top: 0.5;
 }
 
-#col1, #col1-especialista
+#col1
 {
     text-align: center;
     width: 65%;
     color: white;
 }
 
-#listado-turnos, #listado-turnos-especialista
+#listado-turnos
 {
     border: 1px solid white;
     border-radius: 5px;
@@ -30,7 +30,7 @@
     width: 100%;
 }
 
-#opciones-turnos, #opciones-turnos-especialista
+#opciones-turnos
 {
     text-align: center;
     height: 15.7rem;
@@ -60,12 +60,12 @@ li
     list-style: none;
 }
 
-#titulo-principal, #titulo-principal2, #titulo-principal-especialista, #titulo-principal2-especialista
+#titulo-principal, #titulo-principal2
 {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
-#col2, #col2-especialista
+#col2
 {
     text-align: center;
     width: 35%;
@@ -86,17 +86,17 @@ li
 
 @media (max-width: 1100px) 
 {
-    #col1, #col2-especialista
+    #col1
     {
         width: 100%;      
     }
-    #col2, #col2-especialista
+    #col2
     {
         margin-top: 1.5rem;
         width: 100%;
     }
 
-    #contenedor-absoluto, #contenedor-absoluto-especialista
+    #contenedor-absoluto
     {
         height: 50rem;
     }

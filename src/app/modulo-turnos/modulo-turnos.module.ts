@@ -5,6 +5,7 @@ import { OpcionesFiltradorasTurnosComponent } from './Vistas/turnos/opciones-fil
 import { AltaTurnoComponent } from './Vistas/alta-turno/alta-turno.component';
 import { ListadoEspecialidadesComponent } from './Vistas/alta-turno/listado-especialidades/listado-especialidades.component';
 import { FormsModule } from '@angular/forms';
+import { TotalidadTurnosComponent } from './Vistas/totalidad-turnos/totalidad-turnos.component';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { FormsModule } from '@angular/forms';
     OpcionesFiltradorasTurnosComponent,
     AltaTurnoComponent,
     ListadoEspecialidadesComponent,
+    TotalidadTurnosComponent,
   ],
   imports: [
     CommonModule,

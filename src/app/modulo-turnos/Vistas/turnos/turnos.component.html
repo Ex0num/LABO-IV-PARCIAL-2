@@ -1,4 +1,4 @@
-<div class="p-4 p-md-5 mb-4 rounded" id="contenedor-absoluto">
+<div class="p-4 p-md-5 mb-4 rounded" id="contenedor-absoluto" *ngIf="this.srvAuth.isPacient == true">
 
     <div class="row">
 
@@ -35,6 +35,51 @@
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div class="col p-4 d-flex flex-column position-static">
                     <app-opciones-filtradoras-turnos (opcionClickeada)="filtroClickeado($event)"></app-opciones-filtradoras-turnos>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="p-4 p-md-5 mb-4 rounded" id="contenedor-absoluto-especialista" *ngIf="this.srvAuth.isEspecialist == true">
+
+    <div class="row">
+
+        <div class="col-md-4" id="col1-especialista">
+            <h1 class="display-4 fst-italic" id="titulo-principal-especialista">Listado de sus turnos</h1>
+            <div class="col-md-4" id="listado-turnos-especialista">
+                <div class="col p-4 d-flex flex-column position-static">
+                   
+                    <ul id="opciones-turnos-especialista">
+                        <li *ngFor="let turno of listadoTurnosEspecialistaLogeado; let i = index" class="item-turno" (click)="turnoClickeado(turno)">
+                            <label>{{turno.info}} - <strong>{{turno.estado}}</strong> - {{turno.paciente}}</label>
+                        </li>         
+                    </ul>
+
+                    <!-- <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && estadoTurno != 'realizado' && estadoTurno != 'cancelado' " (click)="cancelarTurno()">Cancelar</button>
+                    <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && (resenaTurno != undefined && resenaTurno != '' )" (click)="verResena()">Ver reseña</button>
+                    <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && estadoTurno == 'realizado' && (resenaTurno != undefined && resenaTurno != '' )">Completar encuesta</button>
+                    <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && estadoTurno == 'realizado'">Calificar atención</button> -->
+ 
+                    <!-- <textarea readonly id="comentario-resena" *ngIf="turnoSeleccionado == true && resenaTurnoHabilitado == true">{{textoResena}}</textarea>  -->
+
+                    <!-- <textarea id="comentario-encuesta" *ngIf="turnoSeleccionado == true && comentarioTurnoHabilitado == true"></textarea>
+                    <button class="btn-enviar-encuesta" *ngIf="turnoSeleccionado == true && comentarioTurnoHabilitado == true" (click)="enviarEncuesta()">Enviar encuesta</button>
+         -->
+                    <input id="comentario-cancelacion" *ngIf="turnoSeleccionado == true && comentarioTurnoHabilitado == true" [(ngModel)]="comentarioIngresado">
+                    <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && comentarioTurnoHabilitado == true" (click)="procederCancelacion()">Enviar y cancelar</button>
+     
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4" id="col2-especialista">
+            <h1 class="display-4 fst-italic" id="titulo-principal2">Filtrar</h1>
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <!-- <app-opciones-filtradoras-turnos (opcionClickeada)="filtroClickeado($event)"></app-opciones-filtradoras-turnos> -->
                 </div>
             </div>
         </div>

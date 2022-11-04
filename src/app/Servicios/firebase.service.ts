@@ -468,7 +468,37 @@ export class FirebaseService
     });
 
     let arrayTurnosFiltrado = arrayTurnos.filter( (a)=>{ if (a.paciente == mailpacienteRecibido){return -1} else {return 0}});
-    console.log("ARRAY TURNOS FILTRADO:");
+    console.log("ARRAY TURNOS FILTRADO BY USER:");
+    console.log(arrayTurnosFiltrado);
+
+    return arrayTurnosFiltrado;
+  }
+
+  public async leerTurnosByMailEspecialistaDB(mailEspecialistaRecibido:string)
+  {
+    let arrayTurnos = new Array();
+
+    const querySnapshot = await getDocs(turnos);
+    querySnapshot.forEach((doc) => 
+    {
+      //creo el usuario y le agrego la data
+      let turno = 
+      {
+        especialista: doc.data()['especialista'],
+        paciente: doc.data()['paciente'],
+        estado: doc.data()['estado'],
+        info: doc.data()['info'],
+        especialidad: doc.data()['especialidad'],
+        solicitado: doc.data()['solicitado'],
+        resena: doc.data()['resena'],
+        comentario: doc.data()['comentario'],
+      }
+
+      arrayTurnos.push(turno);
+    });
+
+    let arrayTurnosFiltrado = arrayTurnos.filter( (a)=>{ if (a.especialista == mailEspecialistaRecibido){return -1} else {return 0}});
+    console.log("ARRAY TURNOS FILTRADO BY SPECIALIST:");
     console.log(arrayTurnosFiltrado);
 
     return arrayTurnosFiltrado;

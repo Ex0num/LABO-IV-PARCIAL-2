@@ -13,29 +13,27 @@ export class TurnosComponent implements OnInit {
 
   async ngOnInit(): Promise<void> 
   {
-    this.arrayTurnos = await this.srvFirebase.leerTurnosByMailDB(this.srvAuth.userLogedmail);
+    
+    await setTimeout(async () => {
+      
+    if (this.srvAuth.isEspecialist == true)
+    {
+      this.arrayTurnos = await this.srvFirebase.leerTurnosByMailEspecialistaDB(this.srvAuth.userLogedmail);
+      this.listadoTurnosEspecialistaLogeado = this.arrayTurnos;
+    }
+    else
+    {
+      this.arrayTurnos = await this.srvFirebase.leerTurnosByMailDB(this.srvAuth.userLogedmail);
+      this.listadoTurnosPacienteLogeado = this.arrayTurnos;
+    }
 
-    // this.arrayTurnos.sort((a,b)=>
-    // {
-    //   let spliteoA = a.split(" ",2);
-    //   let spliteoB = b.split(" ",2);
+    console.log(this.arrayTurnos);
 
-    //   console.log(spliteoA);
-    //   console.log(spliteoB);
-
-    //   if (spliteoA[1] > spliteoB[1])
-    //   {
-    //     return 0;
-    //   }
-    //   else
-    //   {
-    //     return -1;
-    //   }
-    // });
-
-    this.listadoTurnosPacienteLogeado = this.arrayTurnos;
+    }, 850);
+    
   }
 
+  public listadoTurnosEspecialistaLogeado:any[] = [];
   public listadoTurnosPacienteLogeado:any[] = [];
   public arrayTurnos:any[] = [];
 
