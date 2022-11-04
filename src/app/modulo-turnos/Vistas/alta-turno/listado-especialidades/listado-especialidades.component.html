@@ -1,5 +1,6 @@
 <ul id="opciones-especialidades">
     <li *ngFor="let especialidad of arrayEspecialidades" class="item-especialidad" (click)="especialidadElegida(especialidad)">
+        <img class="foto-especialidad" src="../../../../../assets/especialidad-default.png">
         <label>{{especialidad}}</label>
     </li>
 </ul>

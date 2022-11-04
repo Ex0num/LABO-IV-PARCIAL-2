@@ -75,18 +75,32 @@
     text-align: center;
 }
 
-.item-especialista:hover, .item-turno:hover
+.item-especialista
 {
-    background-color: #556e78;
+    height: 3rem;
+    border-radius: 20px;
+    margin-bottom: 2rem;
 }
 
 .foto-especialista, .foto-paciente
 {
     width: 40px;
     height: 100%;
-    border-radius: 5px;
+    border-radius: 10px;
     border: 1px solid white;
     margin-right: 0.5rem;
+}
+
+.foto-especialista
+{
+        margin-left: 3.5rem;
+        width: 55px;
+        height: 100%;
+}
+
+.item-especialista:hover, .item-turno:hover
+{
+    background-color: #556e78;
 }
 
 #btn-solicitar-turno

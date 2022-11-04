@@ -84,9 +84,72 @@ li
     margin-top: 0.5rem;
 }
 
+#btn-filtro-especialidad, #btn-filtro-paciente
+{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-left: 1.8rem;
+}
+
+#opciones-pacientes, #opciones-especialidades
+{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    height: 10rem;
+    overflow: auto;
+}
+
+#btn-filtro-paciente, #btn-filtro-especialidad, #btn-limpiar-filtro
+{
+    font-size: 20px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    border: 1px solid white;
+    background-color: #425b65;
+    border-radius: 5px;
+    width: 90%;
+    color: white;
+    margin-top: 0.5rem;
+}
+
+#btn-limpiar-filtro
+{
+    margin-left: 8%;
+    width: 90%;
+    margin-top: 0.5rem;
+}
+
+#container-opciones-filtradoras
+{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    border: 1px solid white;
+    border-radius: 5px;
+    width: 96%;
+    margin-top: 1rem;
+    margin-left: 0.52rem;
+    text-align: left;
+    margin-bottom: 0px;
+}
+
+.item-paciente, .item-especialidad
+{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-top: 0.5rem;
+    height: 2rem;
+    border-radius: 4px;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.foto-paciente
+{
+    width: 40px;
+    height: 100%;
+    border-radius: 5px;
+    border: 1px solid white;
+    margin-right: 0.5rem;
+}
+
 @media (max-width: 1100px) 
 {
-    #col1, #col2-especialista
+    #col1, #col1-especialista
     {
         width: 100%;      
     }
@@ -94,6 +157,13 @@ li
     {
         margin-top: 1.5rem;
         width: 100%;
+    }
+
+    #btn-filtro-paciente, #btn-filtro-especialidad, #btn-limpiar-filtro
+    {
+        width: 90%;
+        margin-top: 0.5rem;
+
     }
 
     #contenedor-absoluto, #contenedor-absoluto-especialista

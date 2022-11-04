@@ -15,14 +15,21 @@
 
                     <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && estadoTurno != 'realizado' && estadoTurno != 'cancelado' " (click)="cancelarTurno()">Cancelar</button>
                     <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && (resenaTurno != undefined && resenaTurno != '' )" (click)="verResena()">Ver reseña</button>
-                    <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && estadoTurno == 'realizado' && (resenaTurno != undefined && resenaTurno != '' )">Completar encuesta</button>
-                    <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && estadoTurno == 'realizado'">Calificar atención</button>
+                    <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && estadoTurno == 'realizado' && (resenaTurno != undefined && resenaTurno != '' )" (click)="enviarEncuesta()">Completar encuesta</button>
+                    <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && estadoTurno == 'realizado'" (click)="enviarValoracion()">Calificar atención</button>
 
+                    <!-- Ver reseña -->
                     <textarea readonly id="comentario-resena" *ngIf="turnoSeleccionado == true && resenaTurnoHabilitado == true">{{textoResena}}</textarea>
 
-                    <!-- <textarea id="comentario-encuesta" *ngIf="turnoSeleccionado == true && comentarioTurnoHabilitado == true"></textarea>
-                    <button class="btn-enviar-encuesta" *ngIf="turnoSeleccionado == true && comentarioTurnoHabilitado == true" (click)="enviarEncuesta()">Enviar encuesta</button>
-         -->
+                    <!-- Completar encuesta -->
+                    <textarea id="comentario-encuesta" *ngIf="turnoSeleccionado == true && encuestaTurnoHabilitado == true" [(ngModel)]="encuestaIngresada"></textarea>
+                    <button class="btn-enviar-encuesta" *ngIf="turnoSeleccionado == true && encuestaTurnoHabilitado == true" (click)="procederEncuesta()">Enviar encuesta</button>
+        
+                    <!-- Completar valoracion -->
+                    <input id="comentario-valoracion" *ngIf="turnoSeleccionado == true && valoracionTurnoHabilitado == true" [(ngModel)]="valoracionIngresada">
+                    <button class="btn-enviar-valoracion" *ngIf="turnoSeleccionado == true && valoracionTurnoHabilitado == true" (click)="procederValoracion()">Enviar encuesta</button>
+
+                    <!-- Cancelar turno -->
                     <input id="comentario-cancelacion" *ngIf="turnoSeleccionado == true && comentarioTurnoHabilitado == true" [(ngModel)]="comentarioIngresado">
                     <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && comentarioTurnoHabilitado == true" (click)="procederCancelacion()">Enviar y cancelar</button>
         
@@ -58,16 +65,20 @@
                         </li>         
                     </ul>
 
-                    <!-- <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && estadoTurno != 'realizado' && estadoTurno != 'cancelado' " (click)="cancelarTurno()">Cancelar</button>
+                    <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && estadoTurno != 'realizado' && estadoTurno != 'cancelado' " (click)="cancelarTurno()">Cancelar</button>
                     <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && (resenaTurno != undefined && resenaTurno != '' )" (click)="verResena()">Ver reseña</button>
-                    <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && estadoTurno == 'realizado' && (resenaTurno != undefined && resenaTurno != '' )">Completar encuesta</button>
-                    <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && estadoTurno == 'realizado'">Calificar atención</button> -->
- 
-                    <!-- <textarea readonly id="comentario-resena" *ngIf="turnoSeleccionado == true && resenaTurnoHabilitado == true">{{textoResena}}</textarea>  -->
+                    <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && estadoTurno != 'realizado' && estadoTurno != 'aceptado' && estadoTurno != 'rechazado' && estadoTurno != 'cancelado'" (click)="rechazarTurno()">Rechazar Turno</button>
+                    <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && estadoTurno != 'realizado' && estadoTurno != 'aceptado' && estadoTurno != 'rechazado' && estadoTurno != 'cancelado'" (click)="aceptarTurno()">Aceptar Turno</button> 
+                    <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && estadoTurno == 'aceptado'" (click)="finalizarTurno()">Finalizar Turno</button> 
 
-                    <!-- <textarea id="comentario-encuesta" *ngIf="turnoSeleccionado == true && comentarioTurnoHabilitado == true"></textarea>
-                    <button class="btn-enviar-encuesta" *ngIf="turnoSeleccionado == true && comentarioTurnoHabilitado == true" (click)="enviarEncuesta()">Enviar encuesta</button>
-         -->
+                    <!-- Ver reseña -->
+                    <textarea readonly id="comentario-resena" *ngIf="turnoSeleccionado == true && resenaTurnoHabilitado == true">{{textoResena}}</textarea> 
+
+                    <!-- Finalizar turno -->
+                    <textarea id="comentario-finalizacion" *ngIf="turnoSeleccionado == true && resenaDevolucionTurnoHabilitado == true" [(ngModel)]="textoDevolucion"></textarea>
+                    <button class="btn-enviar-comentario" *ngIf="turnoSeleccionado == true && resenaDevolucionTurnoHabilitado == true" (click)="procederFinalizacion()">Enviar diagnostico</button>
+                   
+                    <!-- Cancelar turno -->
                     <input id="comentario-cancelacion" *ngIf="turnoSeleccionado == true && comentarioTurnoHabilitado == true" [(ngModel)]="comentarioIngresado">
                     <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && comentarioTurnoHabilitado == true" (click)="procederCancelacion()">Enviar y cancelar</button>
      
@@ -79,7 +90,32 @@
             <h1 class="display-4 fst-italic" id="titulo-principal2">Filtrar</h1>
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div class="col p-4 d-flex flex-column position-static">
-                    <!-- <app-opciones-filtradoras-turnos (opcionClickeada)="filtroClickeado($event)"></app-opciones-filtradoras-turnos> -->
+                   
+                    <!-- OPCIONES FILTRADORAS -->
+
+                    <button id="btn-filtro-especialidad" (click)="actualizarFiltroEspecialista('especialidad')">Especialidad</button>
+                    <button id="btn-filtro-paciente" (click)="actualizarFiltroEspecialista('paciente')">Paciente</button>
+                    <button id="btn-limpiar-filtro" (click)="filtroClickeadoEspecialista('none','default')">Limpiar</button>
+
+                    <div id="container-opciones-filtradoras">
+
+                        <ul id="opciones-pacientes" *ngIf="opcionFiltradoraSeleccionada == 'paciente'">
+                            <li *ngFor="let paciente of arrayPacientes" class="item-paciente" (click)="filtroClickeadoEspecialista(paciente,'paciente')">
+                                <img class="foto-paciente" src="{{paciente.foto1}}">
+                                <label>Pac. {{paciente.nombre + " " + paciente.apellido}}</label>
+                            </li>
+                        </ul>
+
+                        <ul id="opciones-especialidades" *ngIf="opcionFiltradoraSeleccionada== 'especialidad'">
+                            <li *ngFor="let especialidad of arrayEspecialidades" class="item-especialidad" (click)="filtroClickeadoEspecialista(especialidad,'especialidad')">
+                                <label>{{especialidad}}</label>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <!------------------------------->
+
                 </div>
             </div>
         </div>

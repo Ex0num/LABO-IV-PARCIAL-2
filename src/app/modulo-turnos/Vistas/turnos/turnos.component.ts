@@ -20,6 +20,9 @@ export class TurnosComponent implements OnInit {
     {
       this.arrayTurnos = await this.srvFirebase.leerTurnosByMailEspecialistaDB(this.srvAuth.userLogedmail);
       this.listadoTurnosEspecialistaLogeado = this.arrayTurnos;
+
+      this.arrayPacientes = await this.srvFirebase.leerPacientesDB();
+      this.arrayEspecialidades =  await this.srvFirebase.leerEspecialidades();
     }
     else
     {
@@ -84,22 +87,45 @@ export class TurnosComponent implements OnInit {
   public estadoTurno = "none";
   public resenaTurno = "none";
 
+  valoracionTurnoHabilitado = false;
+  valoracionIngresada = "";
+
+  encuestaTurnoHabilitado = false;
+  encuestaIngresada = "";
+
   comentarioTurnoHabilitado = false;
+  comentarioIngresado = "";
+
+  resenaDevolucionTurnoHabilitado = false;
+  textoDevolucion = "";
 
   resenaTurnoHabilitado = false;
   textoResena = "";
-  comentarioIngresado = "";
 
   turnoClickeado(turnoRecibido:any)
   {
     this.resenaTurnoHabilitado = false;
+    this.resenaDevolucionTurnoHabilitado = false;
     this.comentarioTurnoHabilitado = false;
+    this.encuestaTurnoHabilitado = false;
+    this.valoracionTurnoHabilitado = false;
+
     this.turnoSeleccionado = true;
     this.turnoDataActual = turnoRecibido;
     this.estadoTurno = turnoRecibido.estado;
     this.resenaTurno = turnoRecibido.resena;
     console.log(turnoRecibido);
 
+  }
+
+  enviarValoracion()
+  {
+    this.valoracionTurnoHabilitado = true;
+  }
+
+  procederValoracion()
+  {
+    this.srvFirebase.setearEstadoyValoracionTurno(this.turnoDataActual.info, this.turnoDataActual.estado, this.turnoDataActual.estado, this.valoracionIngresada);
   }
 
   cancelarTurno()
@@ -120,7 +146,143 @@ export class TurnosComponent implements OnInit {
 
   enviarEncuesta()
   {
+    this.encuestaTurnoHabilitado = true;
+  }
 
+  procederEncuesta()
+  {
+    this.srvFirebase.setearEstadoyEncuestaTurno(this.turnoDataActual.info, this.turnoDataActual.estado, this.turnoDataActual.estado, this.encuestaIngresada);
+  }
+
+  aceptarTurno()
+  {
+    this.srvFirebase.setearEstadoyComentarioTurno(this.turnoDataActual.info, this.turnoDataActual.estado, "aceptado", this.turnoDataActual.comentario);
+  }
+
+  rechazarTurno()
+  {
+    this.srvFirebase.setearEstadoyComentarioTurno(this.turnoDataActual.info, this.turnoDataActual.estado, "rechazado", this.turnoDataActual.comentario);
+  }
+
+  finalizarTurno()
+  {
+    this.resenaDevolucionTurnoHabilitado = true;
+  }
+
+  procederFinalizacion()
+  {
+    this.srvFirebase.setearEstadoyResenaTurno(this.turnoDataActual.info, this.turnoDataActual.estado, "realizado", this.textoDevolucion);
+  }
+
+  // FILTRACIONES
+
+  opcionFiltradoraSeleccionada = 'none';
+
+  arrayPacientes:any;
+  arrayEspecialidades:any;
+
+  filtroClickeadoEspecialista(dataRecibida:any, tipoRecibido:any)
+  {
+    this.listadoTurnosEspecialistaLogeado = this.listadoTurnosEspecialistaLogeado.concat(this.arrayTurnos);
+
+    let infoFiltroRecibida = 
+    {
+      tipo: tipoRecibido, 
+      data: dataRecibida
+    };
+
+    if (infoFiltroRecibida.tipo == 'paciente')
+    {
+      this.listadoTurnosEspecialistaLogeado = this.arrayTurnos.filter( (e:any) => 
+      {
+          if (e.paciente == infoFiltroRecibida.data.mail)
+          {
+            return -1;
+          }
+          else
+          {
+            return 0;
+          }
+      });
+
+      console.log(infoFiltroRecibida.data);
+    }
+    else if (infoFiltroRecibida.tipo == 'especialidad')
+    {
+      this.listadoTurnosEspecialistaLogeado = this.arrayTurnos.filter( (e:any) => 
+      {
+          if (e.especialidad == infoFiltroRecibida.data)
+          {
+            return -1;
+          }
+          else
+          {
+            return 0;
+          }
+      });
+    }
+    else if (infoFiltroRecibida.tipo == 'default')
+    { 
+      this.listadoTurnosEspecialistaLogeado = this.arrayTurnos;
+    }
+
+    console.log(this.listadoTurnosPacienteLogeado);
+  }
+
+  actualizarFiltroEspecialista(filtracionRecibida:string)
+  {
+    let btnPaciente:any = document.getElementById("btn-filtro-paciente");
+    let btnEspecialidad:any = document.getElementById("btn-filtro-especialidad");
+
+    switch (filtracionRecibida) 
+    {
+      case 'paciente':
+      {
+        btnPaciente.style.backgroundColor = "#556e78";
+        btnEspecialidad.style.backgroundColor = "#425b65";
+        this.opcionFiltradoraSeleccionada = filtracionRecibida;
+        
+        break;
+      }
+      case 'especialidad':
+      {
+        btnEspecialidad.style.backgroundColor = "#556e78";
+        btnPaciente.style.backgroundColor = "#425b65";
+        this.opcionFiltradoraSeleccionada = filtracionRecibida;
+
+        break;
+      }
+    }
+  }
+
+  // --
+
+  actualizarFiltro(filtracionRecibida:string)
+  {
+    let btnEspecialista:any = document.getElementById("btn-filtro-especialista");
+    let btnEspecialidad:any = document.getElementById("btn-filtro-especialidad");
+
+    switch (filtracionRecibida) 
+    {
+      case 'especialista':
+      {
+        btnEspecialista.style.backgroundColor = "#556e78";
+        btnEspecialidad.style.backgroundColor = "#425b65";
+        this.opcionFiltradoraSeleccionada = filtracionRecibida;
+        
+        break;
+      }
+      case 'especialidad':
+      {
+        btnEspecialidad.style.backgroundColor = "#556e78";
+        btnEspecialista.style.backgroundColor = "#425b65";
+        this.opcionFiltradoraSeleccionada = filtracionRecibida;
+
+        break;
+      }
+    }
+
+    
   }
 
 }

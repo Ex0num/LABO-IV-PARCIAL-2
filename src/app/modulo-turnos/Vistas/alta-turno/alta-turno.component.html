@@ -40,8 +40,8 @@
 
                     <ul id="opciones-especialistas">
                         <li *ngFor="let especialista of arrayEspecialistasFiltrado" class="item-especialista" (click)="especialistaElegido(especialista)">
+                            <label>Lic. {{especialista.nombre + " " + especialista.apellido}}</label><br>
                             <img class="foto-especialista" src="{{especialista.foto1}}">
-                            <label>Lic. {{especialista.nombre + " " + especialista.apellido}}</label>
                         </li>
                     </ul>
 

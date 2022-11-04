@@ -434,7 +434,9 @@ export class FirebaseService
       paciente: mailPacienteRecibido,
       solicitado: fechaActual,
       resena: '',
-      comentario: ''
+      comentario: '',
+      encuesta: '',
+      valoracion: '',
     }
 
     let lastId = this.getLastIDTurnos();
@@ -462,6 +464,8 @@ export class FirebaseService
         solicitado: doc.data()['solicitado'],
         resena: doc.data()['resena'],
         comentario: doc.data()['comentario'],
+        encuesta: doc.data()['encuesta'],
+        valoracion: doc.data()['valoracion'],
       }
 
       arrayTurnos.push(turno);
@@ -492,6 +496,8 @@ export class FirebaseService
         solicitado: doc.data()['solicitado'],
         resena: doc.data()['resena'],
         comentario: doc.data()['comentario'],
+        encuesta: doc.data()['encuesta'],
+        valoracion: doc.data()['valoracion'],
       }
 
       arrayTurnos.push(turno);
@@ -552,6 +558,49 @@ export class FirebaseService
     this.modificarTurno(turnoEncontrado[0], idDoc);
 
   }
+
+  public async setearEstadoyEncuestaTurno(fechaRecibida:string, estadoViejo:string, estadoTurnoRecibido:string, encuestaRecibida:string)
+  {
+    let turnoEncontrado = await this.buscarTurnoPorFechaYEstado(fechaRecibida,estadoViejo); 
+    console.log(turnoEncontrado);
+
+    turnoEncontrado[0].estado = estadoTurnoRecibido;
+    turnoEncontrado[0].encuesta = encuestaRecibida;
+
+    let idDoc = await this.obtenerIDTurnoPorFechaYEstado(turnoEncontrado[0].info,estadoViejo);
+    console.log(idDoc);
+    this.modificarTurno(turnoEncontrado[0], idDoc);
+
+  }
+
+  public async setearEstadoyValoracionTurno(fechaRecibida:string, estadoViejo:string, estadoTurnoRecibido:string, valoracionRecibida:string)
+  {
+    let turnoEncontrado = await this.buscarTurnoPorFechaYEstado(fechaRecibida,estadoViejo); 
+    console.log(turnoEncontrado);
+
+    turnoEncontrado[0].estado = estadoTurnoRecibido;
+    turnoEncontrado[0].valoracion = valoracionRecibida;
+
+    let idDoc = await this.obtenerIDTurnoPorFechaYEstado(turnoEncontrado[0].info,estadoViejo);
+    console.log(idDoc);
+    this.modificarTurno(turnoEncontrado[0], idDoc);
+
+  }
+
+  public async setearEstadoyResenaTurno(fechaRecibida:string, estadoViejo:string, estadoTurnoRecibido:string, resenaRecibida:string)
+  {
+    let turnoEncontrado = await this.buscarTurnoPorFechaYEstado(fechaRecibida,estadoViejo); 
+    console.log(turnoEncontrado);
+
+    turnoEncontrado[0].estado = estadoTurnoRecibido;
+    turnoEncontrado[0].resena = resenaRecibida;
+
+    let idDoc = await this.obtenerIDTurnoPorFechaYEstado(turnoEncontrado[0].info,estadoViejo);
+    console.log(idDoc);
+    this.modificarTurno(turnoEncontrado[0], idDoc);
+  }
+
+  
 
   modificarTurno(turnoEstructuradoRecibido:any, idTurnoRecibido:number)
   {
