@@ -6,9 +6,30 @@
             <h1 class="display-4 fst-italic" id="titulo-principal">Listado</h1>
             <div class="col-md-4" id="listado-turnos">
                 <div class="col p-4 d-flex flex-column position-static">
-                   
+
+                    <div class="row">
+                        <input [(ngModel)]="datoFiltrador" type="text" placeholder="Ingrese el dato por el cual filtrar" id="data-filtradora">
+                        <input [(ngModel)]="campoFiltrador" type="text" hidden>
+
+                        <select (change)="actualizarFiltracionCampo($event)" id="combo-box-filtraciones">
+                            <option>Ningun/a</option>
+                            <option>Mail especialista</option>
+                            <option>Fecha</option>
+                            <option>Estado</option>
+                            <option>Especialidad</option>
+
+                            <!-- Datos solo disponibles si el estado del turno es 'finalizado' -->
+                            <option>Altura</option>
+                            <option>Peso</option>
+                            <option>Temperatura</option>
+                            <option>Presión</option>
+                            <option>Dato personalizado</option>
+                            <option>Valor personalizado</option>
+                        </select>
+                    </div>
+
                     <ul id="opciones-turnos">
-                        <li *ngFor="let turno of listadoTurnosPacienteLogeado; let i = index" class="item-turno" (click)="turnoClickeado(turno)">
+                        <li *ngFor="let turno of (listadoTurnosPacienteLogeado | filtradorTurnos: datoFiltrador : campoFiltrador)" class="item-turno" (click)="turnoClickeado(turno)">
                             <label>{{turno.info}} - <strong>{{turno.estado}}</strong></label>
                         </li>         
                     </ul>
@@ -59,8 +80,29 @@
             <div class="col-md-4" id="listado-turnos-especialista">
                 <div class="col p-4 d-flex flex-column position-static">
                    
+                    <div class="row">
+                        <input [(ngModel)]="datoFiltrador" type="text" placeholder="Ingrese el dato por el cual filtrar" id="data-filtradora-especialista">
+                        <input [(ngModel)]="campoFiltrador" type="text" hidden>
+
+                        <select (change)="actualizarFiltracionCampo($event)" id="combo-box-filtraciones-especialista">
+                            <option>Ningun/a</option>
+                            <option>Mail paciente</option>
+                            <option>Fecha</option>
+                            <option>Estado</option>
+                            <option>Especialidad</option>
+
+                            <!-- Datos solo disponibles si el estado del turno es 'finalizado' -->
+                            <option>Altura</option>
+                            <option>Peso</option>
+                            <option>Temperatura</option>
+                            <option>Presión</option>
+                            <option>Dato personalizado</option>
+                            <option>Valor personalizado</option>
+                        </select>
+                    </div>
+
                     <ul id="opciones-turnos-especialista">
-                        <li *ngFor="let turno of listadoTurnosEspecialistaLogeado; let i = index" class="item-turno" (click)="turnoClickeado(turno)">
+                        <li *ngFor="let turno of (listadoTurnosEspecialistaLogeado | filtradorTurnos: datoFiltrador : campoFiltrador)" class="item-turno" (click)="turnoClickeado(turno)">
                             <label>{{turno.info}} - <strong>{{turno.estado}}</strong> - {{turno.paciente}}</label>
                         </li>         
                     </ul>
@@ -74,10 +116,17 @@
                     <!-- Ver reseña -->
                     <textarea readonly id="comentario-resena" *ngIf="turnoSeleccionado == true && resenaTurnoHabilitado == true">{{textoResena}}</textarea> 
 
-                    <!-- Finalizar turno -->
+                    <!-- Finalizar turno y Cargar historial -->
                     <textarea id="comentario-finalizacion" *ngIf="turnoSeleccionado == true && resenaDevolucionTurnoHabilitado == true" [(ngModel)]="textoDevolucion"></textarea>
-                    <button class="btn-enviar-comentario" *ngIf="turnoSeleccionado == true && resenaDevolucionTurnoHabilitado == true" (click)="procederFinalizacion()">Enviar diagnostico</button>
-                   
+                    
+                    <input class="dato-historia-clinica" type="number" placeholder="Altura (cm)" *ngIf="turnoSeleccionado == true && resenaDevolucionTurnoHabilitado == true" [(ngModel)]="alturaPaciente"  [ngModelOptions]="{standalone: true}">   
+                    <input class="dato-historia-clinica" type="number" placeholder="Peso (kg)" *ngIf="turnoSeleccionado == true && resenaDevolucionTurnoHabilitado == true" [(ngModel)]="pesoPaciente"  [ngModelOptions]="{standalone: true}">   
+                    <input class="dato-historia-clinica" type="number" placeholder="Temperatura (°C)"  *ngIf="turnoSeleccionado == true && resenaDevolucionTurnoHabilitado == true" [(ngModel)]="temperaturaPaciente"  [ngModelOptions]="{standalone: true}">   
+                    <input class="dato-historia-clinica" type="number" placeholder="Presión (mmHg)" *ngIf="turnoSeleccionado == true && resenaDevolucionTurnoHabilitado == true" [(ngModel)]="presionPaciente"  [ngModelOptions]="{standalone: true}"> 
+                    <input class="dato-historia-clinica" type="text"  placeholder="Dato personalizado" *ngIf="turnoSeleccionado == true && resenaDevolucionTurnoHabilitado == true"  [(ngModel)]="datoPersonalizadoPaciente"  [ngModelOptions]="{standalone: true}">   
+                    <input class="dato-historia-clinica" type="text" placeholder="Valor personalizado" *ngIf="turnoSeleccionado == true && resenaDevolucionTurnoHabilitado == true" [(ngModel)]="valorPersonalizadoPaciente"  [ngModelOptions]="{standalone: true}">     
+                    <button id="btn-enviar-comentario" *ngIf="turnoSeleccionado == true && resenaDevolucionTurnoHabilitado == true" (click)="procederFinalizacion()">Enviar diagnostico</button>
+                
                     <!-- Cancelar turno -->
                     <input id="comentario-cancelacion" *ngIf="turnoSeleccionado == true && comentarioTurnoHabilitado == true" [(ngModel)]="comentarioIngresado">
                     <button class="btn-accion-turno" *ngIf="turnoSeleccionado == true && comentarioTurnoHabilitado == true" (click)="procederCancelacion()">Enviar y cancelar</button>

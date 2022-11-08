@@ -1,0 +1,27 @@
+#contenedor-absoluto-2
+{
+    font-size: 20px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: white;
+    background-color: #425b65;
+    margin-top: 2rem;
+}
+
+li
+{
+    list-style: none;
+}
+
+.historia-paciente
+{
+    border: 1px solid white;
+    border-radius: 4px;
+    margin-top: 1rem;
+    padding: 1rem;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.historia-paciente:hover
+{
+    background-color: #556e78;
+}

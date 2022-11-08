@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/Servicios/auth.service';
+import { ExcelExportService } from 'src/app/Servicios/excel-export.service';
 import { FirebaseService } from 'src/app/Servicios/firebase.service';
 
 @Component({
@@ -10,7 +11,8 @@ import { FirebaseService } from 'src/app/Servicios/firebase.service';
 })
 export class UsuariosComponent implements OnInit {
 
-  constructor(public srvFirebase:FirebaseService, public srvAuth:AuthService, public routerRecieved:Router) {}
+  constructor(public srvFirebase:FirebaseService, public srvAuth:AuthService, public routerRecieved:Router,public srvExcel:ExcelExportService) 
+  {}
 
   listaEspecialistasDB: any[] = [];
   listaEspecialistasBloqueadosDB: any[] = [];
@@ -34,6 +36,7 @@ export class UsuariosComponent implements OnInit {
   public dniAdminIngresado:any;
   public fotoAdminIngresada:any;
 
+  public historiasClinicas: any[] = [];
 
   async ngOnInit(): Promise<void> 
   {
@@ -56,6 +59,22 @@ export class UsuariosComponent implements OnInit {
     {
       this.cargandoSpinner = false;
     },2000)
+
+    this.historiasClinicas = await this.srvFirebase.leerTurnosDB();
+  
+    this.historiasClinicas.sort((a,b)=>
+    {
+      if(a.especialista > b.especialista)
+      {
+          return 0;
+      }
+      else
+      {
+        return -1;
+      }
+    });
+
+    console.log(this.historiasClinicas);
 
   }
 
@@ -159,5 +178,14 @@ export class UsuariosComponent implements OnInit {
     this.apellidoAdminIngresado = "";
     this.dniAdminIngresado = undefined;
     this.fotoAdminIngresada = undefined;
+  }
+
+  public async exportexcel()
+  {
+    let arrayUsuarios = await this.srvFirebase.leerPacientesDB();
+    arrayUsuarios.concat(await this.srvFirebase.leerEspecialistasDB());
+    arrayUsuarios.concat(await this.srvFirebase.leerAdministradoresDB());
+
+    this.srvExcel.exportar_ArrayObjetos_toExcel(arrayUsuarios,"Usuarios-total","Hoja 1");
   }
 }

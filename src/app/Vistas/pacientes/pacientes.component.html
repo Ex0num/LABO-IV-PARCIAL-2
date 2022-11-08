@@ -1,0 +1,14 @@
+<div class="p-4 p-md-5 mb-4 rounded" id="contenedor-absoluto-2" *ngIf="this.srvAuth.isEspecialist == true" >
+
+   <ul>
+        <li class="historia-paciente" *ngFor="let historiaClinica of historiasClinicasEspecialista">
+           <label>Paciente: {{historiaClinica.paciente}}</label><br><br>
+           <label>Datos Fijos: <br> 
+            Altura: {{historiaClinica.altura}} cm / Peso: {{historiaClinica.peso}} kg / Presión: {{historiaClinica.presion}} mmHg / Temperatura: {{historiaClinica.temperatura + ' °C'}}<br><br>
+            Datos personalizables: <br>
+            {{historiaClinica.datoPersonalizado}} = {{historiaClinica.valorPersonalizado}}    
+            </label><br>
+        </li>
+   </ul>
+
+</div>

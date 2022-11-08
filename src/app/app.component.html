@@ -10,6 +10,7 @@
           <li *ngIf="isLoged == true && isAdmin == true" class="opcion-seccion"><a href="/usuarios" class="nav-link px-2 text-white">Usuarios</a></li>
           <li *ngIf="isLoged == true && isAdmin == true" class="opcion-seccion"><a href="/totalidadturnos" class="nav-link px-2 text-white">Turnos</a></li>
           <li *ngIf="isLoged == true && (isPaciente == true || isEspecialista == true)" class="opcion-seccion"><a href="/misturnos" class="nav-link px-2 text-white">Mis turnos</a></li>
+          <li *ngIf="isLoged == true && isEspecialista == true" class="opcion-seccion"><a href="/pacientes" class="nav-link px-2 text-white">Pacientes</a></li>
           <li *ngIf="isLoged == true && (isPaciente == true || isAdmin == true)" class="opcion-seccion"><a href="/solicitarturno" class="nav-link px-2 text-white">Solicitar turno</a></li>
         </ul>
 

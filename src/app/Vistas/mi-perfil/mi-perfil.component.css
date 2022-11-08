@@ -73,6 +73,49 @@
     margin-left: 2%;
 }
 
+/* HISTORIA CLINICA */
+#contenedor-absoluto-3
+{
+    font-size: 20px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: white;
+    background-color: #425b65;
+    margin-top: 2rem;
+}
+
+#titulo-historia-clinica
+{
+  font-size: 22px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  margin-left: 1.8rem;
+}
+
+#lista-historia-clinica-paciente
+{
+  height: 20rem;
+  overflow: auto;
+}
+
+li
+{
+    list-style: none;
+}
+
+.historia-paciente-leida
+{
+    border: 1px solid white;
+    border-radius: 4px;
+    margin-top: 1rem;
+    padding: 1rem;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.historia-paciente:hover
+{
+    background-color: #556e78;
+}
+/* ---- */
+
 @media (max-width: 1252px)
 {
     /* .col

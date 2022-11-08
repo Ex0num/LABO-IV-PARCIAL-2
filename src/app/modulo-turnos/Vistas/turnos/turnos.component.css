@@ -1,17 +1,38 @@
 #contenedor-absoluto, #contenedor-absoluto-especialista
 {
     margin-top: 2rem;
-    height: 42rem;
+    height: 60rem;
     background-color: #425b65;
     color: white;
 }
 
-#comentario-cancelacion
+/* FILTRACIONES */
+
+#combo-box-filtraciones, #data-filtradora, #combo-box-filtraciones-especialista, #data-filtradora-especialista
+{
+    width: 43%;
+    margin-left: 2.2rem;
+    height: 2.5rem;
+}
+
+/*  */
+
+#comentario-cancelacion, #comentario-finalizacion
 {
     height: 5rem;
     max-height: 5rem;
     border-radius: 4px;
-    margin-top: 0.5;
+    margin-top: 0.5rem;
+    text-align: left;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.dato-historia-clinica
+{
+    margin-top: 0.5rem;
+    border-radius: 5px;
+    text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 #col1, #col1-especialista
@@ -32,6 +53,7 @@
 
 #opciones-turnos, #opciones-turnos-especialista
 {
+    margin-top: 2rem;
     text-align: center;
     height: 15.7rem;
     overflow: auto;
@@ -72,7 +94,7 @@ li
     color: white;
 }
 
-.btn-accion-turno
+.btn-accion-turno, #btn-enviar-comentario
 {
     font-size: 20px;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -146,6 +168,16 @@ li
     border: 1px solid white;
     margin-right: 0.5rem;
 }
+
+@media (max-width: 580px) 
+{
+    #combo-box-filtraciones, #data-filtradora
+    {
+        width: 100%;
+        margin-top: 0.3rem;
+        margin-left: 0rem;
+    }
+}   
 
 @media (max-width: 1100px) 
 {

@@ -211,4 +211,20 @@
 
         </div>
     </div>
+
+    <div *ngIf="userDataLoaded == true && usuario.tipo == 'paciente'" class="p-4 p-md-5 mb-4 rounded" id="contenedor-absoluto-3" hidden>
+  
+        <label id="titulo-historia-clinica"> Historia clínica ordenada por especialistas.</label>
+        <ul id="lista-historia-clinica-paciente">
+             <li class="historia-paciente-leida" *ngFor="let historiaClinica of historiaClinicaPaciente">
+                <label>Especialista: {{historiaClinica.especialista}}</label><br><br>
+                <label>Datos Fijos: <br> 
+                 Altura: {{historiaClinica.altura}} cm / Peso: {{historiaClinica.peso}} kg / Presión: {{historiaClinica.presion}} mmHg / Temperatura: {{historiaClinica.temperatura + ' °C'}}<br><br>
+                 Datos personalizables: <br>
+                 {{historiaClinica.datoPersonalizado}} = {{historiaClinica.valorPersonalizado}}    
+                 </label><br>
+             </li>
+        </ul>
+     
+     </div>
 </div>

@@ -36,9 +36,19 @@ export class TurnosComponent implements OnInit {
     
   }
 
+  actualizarFiltracionCampo(event:any)
+  {
+    this.campoFiltrador = event.target.value;
+  }
+
   public listadoTurnosEspecialistaLogeado:any[] = [];
   public listadoTurnosPacienteLogeado:any[] = [];
   public arrayTurnos:any[] = [];
+
+  public probandoPipe:any;
+
+  public datoFiltrador:any;
+  public campoFiltrador:any;
 
   filtroClickeado(infoFiltroRecibida:any)
   {
@@ -101,6 +111,15 @@ export class TurnosComponent implements OnInit {
 
   resenaTurnoHabilitado = false;
   textoResena = "";
+
+  //Datos de historia clinica (cargada al finalizar turno)
+  public alturaPaciente:any;
+  public pesoPaciente:any;
+  public temperaturaPaciente:any;
+  public presionPaciente:any;
+
+  public datoPersonalizadoPaciente:string = "";
+  public valorPersonalizadoPaciente:string = "";
 
   turnoClickeado(turnoRecibido:any)
   {
@@ -171,7 +190,18 @@ export class TurnosComponent implements OnInit {
 
   procederFinalizacion()
   {
-    this.srvFirebase.setearEstadoyResenaTurno(this.turnoDataActual.info, this.turnoDataActual.estado, "realizado", this.textoDevolucion);
+    this.srvFirebase.setearEstadoResenaHistoriaTurno(
+      this.turnoDataActual.info, 
+      this.turnoDataActual.estado, 
+      "realizado", 
+      this.textoDevolucion,
+
+      this.alturaPaciente,
+      this.pesoPaciente,
+      this.temperaturaPaciente,
+      this.presionPaciente,
+      this.datoPersonalizadoPaciente,
+      this.valorPersonalizadoPaciente);
   }
 
   // FILTRACIONES

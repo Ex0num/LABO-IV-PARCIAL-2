@@ -3,7 +3,7 @@ import { collection, doc, Firestore, getDocs, getFirestore, setDoc, updateDoc } 
 import { getDownloadURL, ref, uploadBytes, uploadString, getStorage } from '@firebase/storage'
 import { Paciente } from '../Entidades/paciente';
 import { environment } from 'src/environments/environment';
-import { administradores, db, especialistas, pacientes, storage, turnos } from '../app.component';
+import { administradores, db, especialistas, historiaClinica, pacientes, storage, turnos } from '../app.component';
 
 @Injectable({
   providedIn: 'root'
@@ -118,6 +118,19 @@ export class FirebaseService
 
     console.log(arrayPacientes);
     return arrayPacientes;
+  }
+
+  public async buscarPacienteByMail(mailRecibido:any)
+  {
+    let pacientes = await this.leerPacientesDB();
+
+    pacientes = pacientes.filter((a)=>{if (a.mail == mailRecibido){return -1}else{return 0}});
+
+   if (pacientes.length > 0)
+    {
+      pacientes[0].tipo = "paciente";
+      return pacientes[0];
+    }
   }
 
   // ---------------------- ESPECIALISTAS ---------------------------//
@@ -423,7 +436,9 @@ export class FirebaseService
   public async subirTurnoDB(especialidadRecibida:any, especialistaRecibido:any, fechaTurnoRecibida:any, mailPacienteRecibido:any, resenaRecibido:any) 
   {
     let fecha = new Date();
-    let fechaActual = fecha.toLocaleTimeString();
+    let fechaActual = fecha.toLocaleDateString();
+    let horaActual = fecha.toLocaleTimeString();
+    let momentum = fechaActual + " " + horaActual;
 
     let turnoEstructurado = 
     {
@@ -432,11 +447,20 @@ export class FirebaseService
       especialidad: especialidadRecibida,
       info: fechaTurnoRecibida,
       paciente: mailPacienteRecibido,
-      solicitado: fechaActual,
+      solicitado: momentum,
       resena: '',
       comentario: '',
       encuesta: '',
       valoracion: '',
+
+      //Historia clinica
+      altura: '',
+      peso : '',
+      presion : '',
+      temperatura : '',
+      datoPersonalizado : '',
+      valorPersonalizado : '',
+      fechaDiagnostico : '',
     }
 
     let lastId = this.getLastIDTurnos();
@@ -466,6 +490,15 @@ export class FirebaseService
         comentario: doc.data()['comentario'],
         encuesta: doc.data()['encuesta'],
         valoracion: doc.data()['valoracion'],
+
+        //Historia clinica
+        altura: doc.data()['altura'],
+        peso: doc.data()['peso'],
+        presion: doc.data()['presion'],
+        temperatura: doc.data()['temperatura'],
+        datoPersonalizado: doc.data()['datoPersonalizado'],
+        valorPersonalizado: doc.data()['valorPersonalizado'],
+        fechaDiagnostico: doc.data()['fechaDiagnostico'],
       }
 
       arrayTurnos.push(turno);
@@ -498,6 +531,15 @@ export class FirebaseService
         comentario: doc.data()['comentario'],
         encuesta: doc.data()['encuesta'],
         valoracion: doc.data()['valoracion'],
+
+        //Historia clinica
+        altura: doc.data()['altura'],
+        peso: doc.data()['peso'],
+        presion: doc.data()['presion'],
+        temperatura: doc.data()['temperatura'],
+        datoPersonalizado: doc.data()['datoPersonalizado'],
+        valorPersonalizado: doc.data()['valorPersonalizado'],
+        fechaDiagnostico: doc.data()['fechaDiagnostico'],
       }
 
       arrayTurnos.push(turno);
@@ -505,6 +547,48 @@ export class FirebaseService
 
     let arrayTurnosFiltrado = arrayTurnos.filter( (a)=>{ if (a.especialista == mailEspecialistaRecibido){return -1} else {return 0}});
     console.log("ARRAY TURNOS FILTRADO BY SPECIALIST:");
+    console.log(arrayTurnosFiltrado);
+
+    return arrayTurnosFiltrado;
+  }
+
+  public async leerTurnosByMailPacienteDB(mailPacienteRecibido:string)
+  {
+    let arrayTurnos = new Array();
+
+    const querySnapshot = await getDocs(turnos);
+    querySnapshot.forEach((doc) => 
+    {
+      //creo el usuario y le agrego la data
+      let turno = 
+      {
+        especialista: doc.data()['especialista'],
+        paciente: doc.data()['paciente'],
+        estado: doc.data()['estado'],
+        info: doc.data()['info'],
+        especialidad: doc.data()['especialidad'],
+        solicitado: doc.data()['solicitado'],
+        resena: doc.data()['resena'],
+        comentario: doc.data()['comentario'],
+        encuesta: doc.data()['encuesta'],
+        valoracion: doc.data()['valoracion'],
+
+        //Historia clinica
+        altura: doc.data()['altura'],
+        peso: doc.data()['peso'],
+        presion: doc.data()['presion'],
+        temperatura: doc.data()['temperatura'],
+        datoPersonalizado: doc.data()['datoPersonalizado'],
+        valorPersonalizado: doc.data()['valorPersonalizado'],
+        fechaDiagnostico: doc.data()['fechaDiagnostico'],
+      }
+
+      arrayTurnos.push(turno);
+    });
+
+    let arrayTurnosFiltrado = arrayTurnos.filter( (a)=>{ if (a.paciente == mailPacienteRecibido){return -1} else {return 0}});
+    
+    console.log("ARRAY TURNOS FILTRADO BY PACIENTE:");
     console.log(arrayTurnosFiltrado);
 
     return arrayTurnosFiltrado;
@@ -544,7 +628,6 @@ export class FirebaseService
     return idEncontrada;
   }
 
-  
   public async setearEstadoyComentarioTurno(fechaRecibida:string, estadoViejo:string, estadoTurnoRecibido:string, comentarioRecibido:string)
   {
     let turnoEncontrado = await this.buscarTurnoPorFechaYEstado(fechaRecibida,estadoViejo); 
@@ -587,7 +670,7 @@ export class FirebaseService
 
   }
 
-  public async setearEstadoyResenaTurno(fechaRecibida:string, estadoViejo:string, estadoTurnoRecibido:string, resenaRecibida:string)
+  public async setearEstadoResenaTurno(fechaRecibida:string, estadoViejo:string, estadoTurnoRecibido:string, resenaRecibida:string)
   {
     let turnoEncontrado = await this.buscarTurnoPorFechaYEstado(fechaRecibida,estadoViejo); 
     console.log(turnoEncontrado);
@@ -598,9 +681,39 @@ export class FirebaseService
     let idDoc = await this.obtenerIDTurnoPorFechaYEstado(turnoEncontrado[0].info,estadoViejo);
     console.log(idDoc);
     this.modificarTurno(turnoEncontrado[0], idDoc);
-  }
 
-  
+    // //Ahora subo los datos de la nueva historia clinica perteneciente a ese turno.
+    // let historiaClinicaEstructurada = 
+    // {
+    //   altura: alturaRecibida,
+    //   correoEspecialista: 
+    //   peso: pesoRecibido,
+    //   presion: presionRecibida,
+    //   temperatura: temperaturaRecibida,
+
+    // }
+  } 
+
+  public async setearEstadoResenaHistoriaTurno(fechaRecibida:string, estadoViejo:string, estadoTurnoRecibido:string, resenaRecibida:string, alturaRecibida:number, pesoRecibido:number, temperaturaRecibida:number, presionRecibida:number, datoPersonalizadoRecibido:string, valorPersonalizadoRecibido:string)
+  {
+    let turnoEncontrado = await this.buscarTurnoPorFechaYEstado(fechaRecibida,estadoViejo); 
+    console.log(turnoEncontrado);
+
+    turnoEncontrado[0].estado = estadoTurnoRecibido;
+    turnoEncontrado[0].resena = resenaRecibida;
+
+    turnoEncontrado[0].altura = alturaRecibida;
+    turnoEncontrado[0].peso = pesoRecibido;
+    turnoEncontrado[0].presion = presionRecibida;
+    turnoEncontrado[0].temperatura = temperaturaRecibida;
+    turnoEncontrado[0].datoPersonalizado = datoPersonalizadoRecibido;
+    turnoEncontrado[0].valorPersonalizado = valorPersonalizadoRecibido;
+    turnoEncontrado[0].fechaDiagnostico = fechaRecibida;
+
+    let idDoc = await this.obtenerIDTurnoPorFechaYEstado(turnoEncontrado[0].info,estadoViejo);
+    console.log(idDoc);
+    this.modificarTurno(turnoEncontrado[0], idDoc);
+  } 
 
   modificarTurno(turnoEstructuradoRecibido:any, idTurnoRecibido:number)
   {
@@ -626,7 +739,6 @@ export class FirebaseService
 
     return arrayFiltrado;
   }
-
 
   // ------------------------- USUARIOS ----------------------//
 

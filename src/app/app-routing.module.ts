@@ -12,6 +12,7 @@ import { TurnosComponent } from './modulo-turnos/Vistas/turnos/turnos.component'
 import { BienvenidaComponent } from './Vistas/bienvenida/bienvenida.component';
 import { LoginComponent } from './Vistas/login/login.component';
 import { MiPerfilComponent } from './Vistas/mi-perfil/mi-perfil.component';
+import { PacientesComponent } from './Vistas/pacientes/pacientes.component';
 import { RegisterComponent } from './Vistas/register/register.component';
 import { UsuariosComponent } from './Vistas/usuarios/usuarios.component';
 import { VerificacionMailComponent } from './Vistas/verificacion-mail/verificacion-mail.component';
@@ -39,6 +40,10 @@ const routes: Routes = [
   /*Solo acceden cuentas logeadas, con mail verificado y (en caso de especialista) habilitado por un admin*/
   {path:'miperfil',component:MiPerfilComponent, canActivate: [OnlyLogedAccountGuard, OnlyVerifiedMailGuard, OnlyAvailableAccountGuard]},
   
+  /*Solo acceden cuentas logeadas, con mail verificado y (en caso de especialista) habilitado por un admin*/
+  {path:'pacientes',component:PacientesComponent, canActivate: [OnlyLogedAccountGuard, OnlyVerifiedMailGuard, OnlyAvailableAccountGuard]},
+  
+
   {path: '', component:BienvenidaComponent},
   {path:'**',component:BienvenidaComponent},
 ];

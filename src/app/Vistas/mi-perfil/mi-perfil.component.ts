@@ -48,9 +48,30 @@ export class MiPerfilComponent implements OnInit {
           dataAdministrador.removeAttribute("hidden");  
           break;
         }
-      }   
+      }
+      
+      let contenedorHistoriaClinicaPaciente:any = document.getElementById("contenedor-absoluto-3");
+      contenedorHistoriaClinicaPaciente.style.animation = "slide-in-blurred-left 0.6s cubic-bezier(0.230, 1.000, 0.320, 1.000) both";
+      contenedorHistoriaClinicaPaciente.removeAttribute("hidden");  
+
     }, 1500);
     
+
+    this.historiaClinicaPaciente = await this.srvFirebase.leerTurnosByMailPacienteDB(this.usuario.mail);
+    
+    this.historiaClinicaPaciente.sort((a,b)=>
+    {
+      if(a.paciente > b.paciente)
+      {
+        return 0;
+      }
+      else
+      {
+        return -1;
+      }
+    });
+
+    console.log(this.historiaClinicaPaciente);
   }
 
   
@@ -66,6 +87,8 @@ export class MiPerfilComponent implements OnInit {
 
   public listadoHorariosHabilitado = false;
   public mensajeEstadoMostrarHorarios = "Mostrar horarios";
+
+  public historiaClinicaPaciente:any[] = [];
 
   checkItem(event:any)
   {

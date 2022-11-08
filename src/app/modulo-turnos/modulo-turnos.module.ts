@@ -6,7 +6,7 @@ import { AltaTurnoComponent } from './Vistas/alta-turno/alta-turno.component';
 import { ListadoEspecialidadesComponent } from './Vistas/alta-turno/listado-especialidades/listado-especialidades.component';
 import { FormsModule } from '@angular/forms';
 import { TotalidadTurnosComponent } from './Vistas/totalidad-turnos/totalidad-turnos.component';
-
+import { FiltradorTurnosPipe } from '../Pipes/filtrador-turnos.pipe';
 
 @NgModule({
   declarations: [
@@ -15,6 +15,7 @@ import { TotalidadTurnosComponent } from './Vistas/totalidad-turnos/totalidad-tu
     AltaTurnoComponent,
     ListadoEspecialidadesComponent,
     TotalidadTurnosComponent,
+    FiltradorTurnosPipe
   ],
   imports: [
     CommonModule,

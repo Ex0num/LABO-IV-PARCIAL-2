@@ -130,8 +130,23 @@
         </div>
 
     </div>
-
-
-
 </main>
+
+<button id="btn-descargar-excel-usuarios" (click)="exportexcel()">Descargar EXCEL de todos los usuarios del sistema</button>
+
+<section class="p-4 p-md-5 mb-4 rounded" id="contenedor-historia-clinica">
+
+    <ul id="lista-historia-clinica" *ngIf="cargandoSpinner == false">
+         <li class="historia-paciente-leida" *ngFor="let historiaClinica of historiasClinicas">
+            <label>Paciente: {{historiaClinica.paciente}}</label><br><br>
+            <label>Datos Fijos: <br> 
+             Altura: {{historiaClinica.altura}} cm / Peso: {{historiaClinica.peso}} kg / Presión: {{historiaClinica.presion}} mmHg / Temperatura: {{historiaClinica.temperatura + ' °C'}}<br><br>
+             Datos personalizables: <br>
+             {{historiaClinica.datoPersonalizado}} = {{historiaClinica.valorPersonalizado}}    
+             </label><br>
+         </li>
+    </ul>
+ 
+ </section>
+
 </div>

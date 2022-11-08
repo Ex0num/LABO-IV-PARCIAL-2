@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VerificacionMailComponent } from './Vistas/verificacion-mail/verificacion-mail.component';
 import { UsuariosComponent } from './Vistas/usuarios/usuarios.component';
 import { MiPerfilComponent } from './Vistas/mi-perfil/mi-perfil.component';
+import { PacientesComponent } from './Vistas/pacientes/pacientes.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { MiPerfilComponent } from './Vistas/mi-perfil/mi-perfil.component';
     VerificacionMailComponent,
     UsuariosComponent,
     MiPerfilComponent,
+    PacientesComponent,
   ],
   imports: [
     BrowserModule,
