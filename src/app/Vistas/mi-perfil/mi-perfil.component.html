@@ -214,19 +214,26 @@
 
     <div *ngIf="userDataLoaded == true && usuario.tipo == 'paciente'" class="p-4 p-md-5 mb-4 rounded" id="contenedor-absoluto-3" hidden>
   
-        <button id="btn-descargar-pdf-paciente" (click)="descargarHistoriaClinicaPaciente()">Descargar PDF de su historia clínica</button><br><br>
+        <h1>Informe correspondiente a {{usuario.mail}}</h1>
+        <img src="../../../assets/header-logo.png" width="150px" height="150px">
+
+        <input type="text" placeholder="Filtrar a especialista por mail" [(ngModel)]="mailProfesionalFiltrado" id="input-filtrador-especialistas">
+
+        <button id="btn-descargar-pdf-paciente" (click)="crearPdf()">Descargar PDF de su historia clínica</button><br><br>
 
         <label id="titulo-historia-clinica"> Historia clínica ordenada por especialistas.</label>
-        <ul id="lista-historia-clinica-paciente">
-             <li class="historia-paciente-leida" *ngFor="let historiaClinica of historiaClinicaPaciente">
-                <label>Especialista: {{historiaClinica.especialista}}</label><br><br>
-                <label>Datos Fijos: <br> 
-                 Altura: {{historiaClinica.altura}} cm / Peso: {{historiaClinica.peso}} kg / Presión: {{historiaClinica.presion}} mmHg / Temperatura: {{historiaClinica.temperatura + ' °C'}}<br><br>
-                 Datos personalizables: <br>
-                 {{historiaClinica.datoPersonalizado}} = {{historiaClinica.valorPersonalizado}}    
-                 </label><br>
-             </li>
-        </ul>
+        <div id="listaHistoriaClinicaPaciente" #listaHistoriaClinicaPaciente>
+            <ul id="ulHistoriaClinicaPaciente">
+                <li class="historia-paciente-leida" *ngFor="let historiaClinica of (historiaClinicaPaciente | filtradorHistoriaClinicaByMailEspecialista : this.mailProfesionalFiltrado)">
+                    <label>Especialista: {{historiaClinica.especialista}}</label><br><br>
+                    <label>Datos Fijos: <br> 
+                    Altura: {{historiaClinica.altura}} cm / Peso: {{historiaClinica.peso}} kg / Presión: {{historiaClinica.presion}} mmHg / Temperatura: {{historiaClinica.temperatura + ' °C'}}<br><br>
+                    Datos personalizables: <br>
+                    {{historiaClinica.datoPersonalizado}} = {{historiaClinica.valorPersonalizado}}    
+                    </label><br>
+                </li>
+            </ul>
+        </div>
      
      </div>
 </div>

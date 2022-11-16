@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkPrisud=self.webpackChunkPrisud||[]).push([[691],{844:(E,n,u)=>{u.r(n),u.d(n,{ModuloTurnosModule:()=>M});var s=u(895),d=u(433),l=u(256);let M=(()=>{class o{}return o.\u0275fac=function(a){return new(a||o)},o.\u0275mod=l.oAB({type:o}),o.\u0275inj=l.cJS({imports:[s.ez,d.u5]}),o})()}}]);

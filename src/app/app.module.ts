@@ -12,6 +12,7 @@ import { UsuariosComponent } from './Vistas/usuarios/usuarios.component';
 import { MiPerfilComponent } from './Vistas/mi-perfil/mi-perfil.component';
 import { PacientesComponent } from './Vistas/pacientes/pacientes.component';
 import { GraficosComponent } from './Vistas/graficos/graficos.component';
+import { FiltradorHistoriaClinicaByMailEspecialistaPipe } from './Pipes/filtrador-historia-clinica-by-mail-especialista.pipe';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { GraficosComponent } from './Vistas/graficos/graficos.component';
     MiPerfilComponent,
     PacientesComponent,
     GraficosComponent,
+    FiltradorHistoriaClinicaByMailEspecialistaPipe,
   ],
   imports: [
     BrowserModule,

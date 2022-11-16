@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/Servicios/auth.service';
 import { FirebaseService } from 'src/app/Servicios/firebase.service';
 import { PdfExportService } from 'src/app/Servicios/pdf-export.service';
-import html2canvas from 'html2canvas';
 
-// let jsPDF = require('../../../../../../node_modules/jspdf/dist/jspdf.min.js');
+import html2canvas from 'html2canvas';
+let jsPDF = require('../../../../node_modules/jspdf/dist/jspdf.min.js');
 
 @Component({
   selector: 'app-mi-perfil',
@@ -93,6 +93,8 @@ export class MiPerfilComponent implements OnInit {
   public mensajeEstadoMostrarHorarios = "Mostrar horarios";
 
   public historiaClinicaPaciente:any[] = [];
+
+  public mailProfesionalFiltrado:any;
 
   checkItem(event:any)
   {
@@ -511,21 +513,22 @@ export class MiPerfilComponent implements OnInit {
 
     
     
-    // this.srvPdfExport.crear_y_descargar_PDF(arrayHistoriaDelPaciente);
+    this.srvPdfExport.crear_y_descargar_PDF(arrayHistoriaDelPaciente);
   }
 
-  // crearPdf() {
-  //   let DATA = <HTMLElement>document.getElementById('pdfTable');
-  //   html2canvas(DATA).then((canvas) => {
-  //     let fileWidth = 208;
-  //     let fileHeight = (canvas.height * fileWidth) / canvas.width;
-  //     const FILEURI = canvas.toDataURL('image/png');
-  //     let PDF = new jsPDF('p', 'mm', 'a4');
-  //     let position = 0;
-  //     PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
-  //     var nombreArchivo = 'historia-clinica.pdf';
-  //     PDF.save(nombreArchivo);
-  //   });
-  // }
+  crearPdf() 
+  {
+    let DATA = <HTMLElement>document.getElementById('contenedor-absoluto-3');
+    html2canvas(DATA).then((canvas) => {
+      let fileWidth = 208;
+      let fileHeight = (canvas.height * fileWidth) / canvas.width;
+      const FILEURI = canvas.toDataURL('image/png');
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      let position = 0;
+      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+      var nombreArchivo = 'historia-clinica.pdf';
+      PDF.save(nombreArchivo);
+    });
+  }
 
 }
