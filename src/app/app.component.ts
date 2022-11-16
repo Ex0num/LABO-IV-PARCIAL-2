@@ -24,6 +24,7 @@ export const pacientes = collection(db, "pacientes");
 export const especialistas = collection(db, "especialistas");
 export const administradores = collection(db, "administradores");
 export const turnos = collection(db, "turnos");
+export const logs = collection(db, "logs");
 export const historiaClinica = collection(db, "historia-clinica");
 
 @Component({

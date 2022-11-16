@@ -3,11 +3,12 @@
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 
         <a href="/bienvenido" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-          <img class="bi me-4" width="55" height="55" src="../assets/header-logo.png">
+          <img class="bi me-4" width="55" height="55" src="../assets/header-logo.png" id="foto-principal-prisud">
         </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0" id="header-ul">
           <li *ngIf="isLoged == true && isAdmin == true" class="opcion-seccion"><a href="/usuarios" class="nav-link px-2 text-white">Usuarios</a></li>
+          <li *ngIf="isLoged == true && isAdmin == true" class="opcion-seccion"><a href="/graficos" class="nav-link px-2 text-white">Gráficos</a></li>
           <li *ngIf="isLoged == true && isAdmin == true" class="opcion-seccion"><a href="/totalidadturnos" class="nav-link px-2 text-white">Turnos</a></li>
           <li *ngIf="isLoged == true && (isPaciente == true || isEspecialista == true)" class="opcion-seccion"><a href="/misturnos" class="nav-link px-2 text-white">Mis turnos</a></li>
           <li *ngIf="isLoged == true && isEspecialista == true" class="opcion-seccion"><a href="/pacientes" class="nav-link px-2 text-white">Pacientes</a></li>

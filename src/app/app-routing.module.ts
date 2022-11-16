@@ -10,6 +10,7 @@ import { AltaTurnoComponent } from './modulo-turnos/Vistas/alta-turno/alta-turno
 import { TotalidadTurnosComponent } from './modulo-turnos/Vistas/totalidad-turnos/totalidad-turnos.component';
 import { TurnosComponent } from './modulo-turnos/Vistas/turnos/turnos.component';
 import { BienvenidaComponent } from './Vistas/bienvenida/bienvenida.component';
+import { GraficosComponent } from './Vistas/graficos/graficos.component';
 import { LoginComponent } from './Vistas/login/login.component';
 import { MiPerfilComponent } from './Vistas/mi-perfil/mi-perfil.component';
 import { PacientesComponent } from './Vistas/pacientes/pacientes.component';
@@ -27,6 +28,9 @@ const routes: Routes = [
   
   /*Solo acceden cuentas que esten en el listado de administradores*/
   {path:'usuarios',component:UsuariosComponent, canActivate: [OnlyLogedAccountGuard, OnlyAdminGuard]},
+
+  /*Solo acceden cuentas que esten en el listado de administradores*/
+  {path:'graficos',component:GraficosComponent, canActivate: [OnlyLogedAccountGuard, OnlyAdminGuard]},
 
   /*Solo acceden cuentas que esten en el listado de administradores*/
   {path:'totalidadturnos',component:TotalidadTurnosComponent, canActivate: [OnlyLogedAccountGuard, OnlyAdminGuard]},

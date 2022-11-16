@@ -11,6 +11,7 @@ import { VerificacionMailComponent } from './Vistas/verificacion-mail/verificaci
 import { UsuariosComponent } from './Vistas/usuarios/usuarios.component';
 import { MiPerfilComponent } from './Vistas/mi-perfil/mi-perfil.component';
 import { PacientesComponent } from './Vistas/pacientes/pacientes.component';
+import { GraficosComponent } from './Vistas/graficos/graficos.component';
 
 @NgModule({
   declarations: [
@@ -22,12 +23,13 @@ import { PacientesComponent } from './Vistas/pacientes/pacientes.component';
     UsuariosComponent,
     MiPerfilComponent,
     PacientesComponent,
+    GraficosComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

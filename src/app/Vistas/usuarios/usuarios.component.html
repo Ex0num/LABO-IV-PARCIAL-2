@@ -109,7 +109,7 @@
             <div *ngIf="cargandoSpinner == true"><img class="spinner" src="../../../assets/spinner.gif"></div>
             <ul id="lista-pacientes" *ngIf="cargandoSpinner == false">
                 <label class="titulo-listas" id="titulo-pacientes">Listado de pacientes</label>             
-                <li class="item-especialista" *ngFor="let paciente of listaPacientesDB">
+                <li class="item-especialista" *ngFor="let paciente of listaPacientesDB" (click)="descargarDataPacienteClickeado(paciente)">
 
                     <div class="row">
                         <div class="col">

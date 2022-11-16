@@ -214,6 +214,8 @@
 
     <div *ngIf="userDataLoaded == true && usuario.tipo == 'paciente'" class="p-4 p-md-5 mb-4 rounded" id="contenedor-absoluto-3" hidden>
   
+        <button id="btn-descargar-pdf-paciente" (click)="descargarHistoriaClinicaPaciente()">Descargar PDF de su historia clínica</button><br><br>
+
         <label id="titulo-historia-clinica"> Historia clínica ordenada por especialistas.</label>
         <ul id="lista-historia-clinica-paciente">
              <li class="historia-paciente-leida" *ngFor="let historiaClinica of historiaClinicaPaciente">

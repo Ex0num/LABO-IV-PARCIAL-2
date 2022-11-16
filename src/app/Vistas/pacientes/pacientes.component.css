@@ -7,6 +7,18 @@
     margin-top: 2rem;
 }
 
+#historia-clinica-detalles
+{
+    border: 1px solid white;
+    width: 80%;
+    border-radius: 6px;
+    margin-bottom: 0.3rem;
+    margin-left: 10%;
+    padding: 1rem;
+    font-size: 18px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
 li
 {
     list-style: none;
@@ -15,13 +27,24 @@ li
 .historia-paciente
 {
     border: 1px solid white;
-    border-radius: 4px;
+    text-align: center;
+    border-radius: 180px;
     margin-top: 1rem;
     padding: 1rem;
+    width: 50%;
+    margin-left: 22%;
+    min-height: 500px;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .historia-paciente:hover
 {
     background-color: #556e78;
+}
+
+.foto-paciente
+{
+    width: 150px;
+    height: 150px;
+    border-radius: 100%;
 }

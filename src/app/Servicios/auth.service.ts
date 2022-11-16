@@ -46,6 +46,9 @@ export class AuthService {
       console.log("IS PACIENTE: " + this.isPacient);
       console.log("IS ESPECIALISTA: " + this.isEspecialist);
       console.log("--------------------------");
+
+      // ------ SUBO LOG ------//
+      this.srvFirebase.subirLogDB(this.userLogedmail, this.isAdmin, this.isPacient, this.isEspecialist);
         
     }).catch((error) => {console.log(error.code);});
   }

@@ -1,0 +1,48 @@
+#body
+{
+    background-color: #58787a;
+    text-align: center;
+    height: 100%;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+#main-container-graphs
+{
+    margin-top: 1.5rem;
+    background-color: rgb(186, 185, 185);
+    border: 1px solid black;
+    padding: 1.5rem;
+}
+
+.graphs
+{
+    height: 25rem;
+    width: 25rem;
+    background-color: white;
+    background-color: rgb(186, 185, 185);
+}
+
+.lbl-graph-helper
+{
+    text-align: center;
+}
+
+#chart1, #chart2, #chart3, #chart4, #chart5
+{
+    margin-top: 0.5rem;
+    border: 1px solid black;
+    border-radius: 8px;
+    background-color: #f9dada;
+    padding: 1rem;
+}
+
+#row1, #row2, #row3
+{
+    margin-top: 2rem;
+    margin-left: 8%;
+    height: 26rem;
+    width: 95%;
+    margin-bottom: 1.5rem;
+}
+
+

@@ -188,4 +188,25 @@ export class UsuariosComponent implements OnInit {
 
     this.srvExcel.exportar_ArrayObjetos_toExcel(arrayUsuarios,"Usuarios-total","Hoja 1");
   }
+
+  public async descargarDataPacienteClickeado(pacienteClickeado:any)
+  {
+    let arrayTurnos = await this.srvFirebase.leerTurnosDB(); 
+    let arrayTurnosDelPaciente:any = [];
+
+    arrayTurnos.forEach( (turno) => 
+    {
+      if (turno.paciente == pacienteClickeado.mail)
+      {
+        arrayTurnosDelPaciente.push(turno);
+      }
+    });
+
+    let fechaValidaActual = new Date().toLocaleDateString();
+    do { fechaValidaActual = fechaValidaActual.replace("/","-"); } while(fechaValidaActual.includes("/"));
+
+    let tituloExcel = pacienteClickeado.nombre + " " + pacienteClickeado.apellido + " Historia clinica al " + fechaValidaActual;
+
+    this.srvExcel.exportar_ArrayObjetos_toExcel(arrayTurnosDelPaciente,tituloExcel,"Hoja 1");
+  }
 }

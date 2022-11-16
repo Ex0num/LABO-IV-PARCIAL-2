@@ -3,7 +3,7 @@ import { collection, doc, Firestore, getDocs, getFirestore, setDoc, updateDoc } 
 import { getDownloadURL, ref, uploadBytes, uploadString, getStorage } from '@firebase/storage'
 import { Paciente } from '../Entidades/paciente';
 import { environment } from 'src/environments/environment';
-import { administradores, db, especialistas, historiaClinica, pacientes, storage, turnos } from '../app.component';
+import { administradores, db, especialistas, historiaClinica, logs, pacientes, storage, turnos } from '../app.component';
 
 @Injectable({
   providedIn: 'root'
@@ -514,15 +514,23 @@ export class FirebaseService
   public async leerTurnosByMailEspecialistaDB(mailEspecialistaRecibido:string)
   {
     let arrayTurnos = new Array();
+    let arrayPacientes = await this.leerPacientesDB();
+    let arrayTurnosTotales = await this.leerTurnosDB();
+
 
     const querySnapshot = await getDocs(turnos);
-    querySnapshot.forEach((doc) => 
+    await querySnapshot.forEach(async (doc) => 
     {
       //creo el usuario y le agrego la data
       let turno = 
       {
         especialista: doc.data()['especialista'],
         paciente: doc.data()['paciente'],
+
+        fotoPaciente: '',
+        resenaPaciente: '',
+        nombrePaciente: '',
+
         estado: doc.data()['estado'],
         info: doc.data()['info'],
         especialidad: doc.data()['especialidad'],
@@ -541,6 +549,15 @@ export class FirebaseService
         valorPersonalizado: doc.data()['valorPersonalizado'],
         fechaDiagnostico: doc.data()['fechaDiagnostico'],
       }
+
+      arrayPacientes.forEach(paciente => 
+      {
+        if (paciente.mail == turno.paciente)
+        {
+          turno.fotoPaciente = paciente.foto1;
+          turno.nombrePaciente = paciente.nombre;
+        }
+      });
 
       arrayTurnos.push(turno);
     });
@@ -768,4 +785,409 @@ export class FirebaseService
       return pacientes[0];
     }
   }
+
+  // ---------------------------- LOGS -------------------------//
+
+  public async subirLogDB(userLogedMailRecibido:string, esAdminRecibido:boolean, esPacienteRecibido:boolean, esEspecialistaRecibido:boolean,)
+  {
+    let fecha = new Date();
+    let fechaActual = fecha.toLocaleDateString();
+    let horaActual = fecha.toLocaleTimeString();
+
+    let diaIng = fecha.getDay();
+    let diaES = diaIng.toLocaleString();
+    let diaConvertido;
+
+    switch (diaES) 
+    {
+      case '1':
+      {
+        diaConvertido = "lunes";
+        break;
+      }
+      case '2':
+      {
+        diaConvertido = "martes";
+        break;
+      }
+      case '3':
+      {
+        diaConvertido = "miercoles";
+        break;
+      }
+      case '4':
+      {
+        diaConvertido = "jueves";
+        break;
+      }
+      case '5':
+      {
+        diaConvertido = "viernes";
+        break;
+      }
+      case '6':
+      {
+        diaConvertido = "sabado";
+        break;
+      }
+      case '7':
+      {
+        diaConvertido = "domingo";
+        break;
+      }
+    }
+
+    let logEstructurado = 
+    {
+      mail: userLogedMailRecibido,
+      esAdmin: esAdminRecibido,
+      esPaciente: esPacienteRecibido,
+      esEspecialista: esEspecialistaRecibido,
+      fecha: fechaActual,
+      hora: horaActual,
+      dia: diaConvertido
+    }
+
+    let lastId = this.getLastIDLogs();
+    let newID = await lastId + 1;
+
+    let newDocument = doc(db, "logs", newID.toString());
+    await setDoc(newDocument, logEstructurado);
+  }
+
+  private async getLastIDLogs()
+  {
+    let querySnapshot = getDocs(logs);
+    let flagMax = 0;
+
+    (await ((querySnapshot))).docs.forEach((doc) => 
+    {
+      if (parseInt(doc.id) > flagMax)
+      {
+        flagMax = parseInt(doc.id);
+      }
+    });
+
+    console.log(flagMax);
+    return flagMax;
+  }
+
+  public async leerLogsDB()
+  {
+    let arrayLogs = new Array();
+
+    const querySnapshot = await getDocs(logs);
+    querySnapshot.forEach((doc) => 
+    {
+      let turno = 
+      {
+        dia: doc.data()['dia'],
+        esAdmin: doc.data()['esAdmin'],
+        esEspecialista: doc.data()['esEspecialista'],
+        esPaciente: doc.data()['esPaciente'],
+        fecha: doc.data()['fecha'],
+        hora: doc.data()['hora'],
+        mail: doc.data()['mail'],
+      }
+
+      arrayLogs.push(turno);
+    });
+
+    console.log(arrayLogs);
+    return arrayLogs;
+  }
+
+  public async leerLogsPorDiasDB()
+  {
+    let arrayLogs = new Array();
+
+    const querySnapshot = await getDocs(logs);
+    querySnapshot.forEach((doc) => 
+    {
+      let turno = 
+      {
+        dia: doc.data()['dia'],
+        esAdmin: doc.data()['esAdmin'],
+        esEspecialista: doc.data()['esEspecialista'],
+        esPaciente: doc.data()['esPaciente'],
+        fecha: doc.data()['fecha'],
+        hora: doc.data()['hora'],
+        mail: doc.data()['mail'],
+      }
+
+      arrayLogs.push(turno);
+    });
+
+    let diasLunes = arrayLogs.filter((element)=>
+    {
+      if (element.dia == "lunes")
+      {
+        return -1;
+      }
+      else
+      {
+        return 0;
+      }
+    });
+
+    let diasMartes = arrayLogs.filter((element)=>
+    {
+      if (element.dia == "martes")
+      {
+        return -1;
+      }
+      else
+      {
+        return 0;
+      }
+    });
+
+    let diasMiercoles = arrayLogs.filter((element)=>
+    {
+      if (element.dia == "miercoles")
+      {
+        return -1;
+      }
+      else
+      {
+        return 0;
+      }
+    });
+
+    let diasJueves = arrayLogs.filter((element)=>
+    {
+      if (element.dia == "jueves")
+      {
+        return -1;
+      }
+      else
+      {
+        return 0;
+      }
+    });
+
+    let diasViernes = arrayLogs.filter((element)=>
+    {
+      if (element.dia == "viernes")
+      {
+        return -1;
+      }
+      else
+      {
+        return 0;
+      }
+    });
+
+    let diasSabados = arrayLogs.filter((element)=>
+    {
+      if (element.dia == "sabado")
+      {
+        return -1;
+      }
+      else
+      {
+        return 0;
+      }
+    });
+
+    let diasDomingos = arrayLogs.filter((element)=>
+    {
+      if (element.dia == "domingo")
+      {
+        return -1;
+      }
+      else
+      {
+        return 0;
+      }
+    });
+
+    let diasSemanaLenght =
+    {
+      lunes: diasLunes.length.toString(),
+      martes: diasMartes.length.toString(),
+      miercoles: diasMiercoles.length.toString(),
+      jueves: diasJueves.length.toString(),
+      viernes: diasViernes.length.toString(),
+      sabado: diasSabados.length.toString(),
+      domingo: diasDomingos.length.toString(),
+    }
+
+    let arrayDiasSemana = new Array();
+    arrayDiasSemana.push(diasSemanaLenght.lunes);
+    arrayDiasSemana.push(diasSemanaLenght.martes);
+    arrayDiasSemana.push(diasSemanaLenght.miercoles);
+    arrayDiasSemana.push(diasSemanaLenght.jueves);
+    arrayDiasSemana.push(diasSemanaLenght.viernes);
+    arrayDiasSemana.push(diasSemanaLenght.sabado);
+    arrayDiasSemana.push(diasSemanaLenght.domingo);
+  
+    return arrayDiasSemana;
+  }
+
+  public async especialidadesConMayorTurnos()
+  {
+    let  arrayTurnos = await this.leerTurnosDB();
+    let diccionarioFinal = new Map<string, number>();
+    
+    arrayTurnos.forEach(turno =>
+    {
+      //Por cada turno, consulto si el diccionario posee la especialidad del turno actual
+      if (diccionarioFinal.has(turno.especialidad) == false)
+      {
+        console.log("No tiene la especidad");
+        diccionarioFinal.set(turno.especialidad, 1);
+      }
+      else
+      {
+        console.log("Tiene ya la especialidad");
+
+        //Recorro el diccionario para buscar esa especialidad que ya se tiene y le hago ++ a su valor
+        let numeroValor:any = diccionarioFinal.get(turno.especialidad);
+        numeroValor++;
+
+        diccionarioFinal.set(turno.especialidad,numeroValor);
+      }
+    });
+
+    console.log(diccionarioFinal);
+    return diccionarioFinal;
+  }
+
+  public async diasConMayorTurnos()
+  {
+    let  arrayTurnos = await this.leerTurnosDB();
+    let diccionarioFinal = new Map<string, number>();
+    let infoSplit;
+
+    arrayTurnos.forEach(turno =>
+    {
+      infoSplit = turno.info.split(" ");
+
+      //Por cada turno, consulto si el diccionario posee la especialidad del turno actual
+      if (diccionarioFinal.has(infoSplit[0]) == false)
+      {
+        console.log("No tiene el dia");
+        diccionarioFinal.set(infoSplit[0], 1);
+      }
+      else
+      {
+        console.log("Tiene ya el dia");
+
+        //Recorro el diccionario para buscar ese dia que ya se tiene y le hago ++ a su valor
+        let numeroValor:any = diccionarioFinal.get(infoSplit[0]);
+        numeroValor++;
+        diccionarioFinal.set(infoSplit[0],numeroValor);
+      }
+
+      console.log(infoSplit[0]);
+    });
+
+    console.log(diccionarioFinal);
+    return diccionarioFinal;
+  }
+
+  public async medicosConMayorTurnosSolicitados()
+  {
+    let  arrayTurnos = await this.leerTurnosDB();
+    let diccionarioFinal = new Map<string, number>();
+    let mailEspecialista;
+
+    let contador = 0;
+
+    arrayTurnos.forEach(turno =>
+    {
+      mailEspecialista = turno.especialista;
+
+      if (contador < 3)
+      {
+        //Por cada turno, consulto si el diccionario posee la especialidad del turno actual
+        if (diccionarioFinal.has(mailEspecialista) == false)
+        {
+          console.log("No tiene el especialista");
+          diccionarioFinal.set(mailEspecialista, 1);
+        }
+        else
+        {
+          console.log("Tiene ya el especialista");
+
+          //Recorro el diccionario para buscar ese dia que ya se tiene y le hago ++ a su valor
+          let numeroValor:any = diccionarioFinal.get(mailEspecialista);
+          numeroValor++;
+          diccionarioFinal.set(mailEspecialista,numeroValor);
+        }
+      }
+      contador++;
+    });
+
+    console.log(diccionarioFinal);
+    return diccionarioFinal;
+  }
+
+  public async medicosConMayorTurnosFinalizados()
+  {
+    let  arrayTurnos = await this.leerTurnosDB();
+    let diccionarioFinal = new Map<string, number>();
+    let mailEspecialista;
+
+    let contador = 0;
+
+    arrayTurnos.forEach(turno =>
+    {
+      mailEspecialista = turno.especialista;
+
+      if (contador < 3 && turno.estado == 'realizado')
+      {
+        //Por cada turno, consulto si el diccionario posee la especialidad del turno actual
+        if (diccionarioFinal.has(mailEspecialista) == false)
+        {
+          console.log("No tiene el especialista");
+          diccionarioFinal.set(mailEspecialista, 1);
+        }
+        else
+        {
+          console.log("Tiene ya el especialista");
+
+          //Recorro el diccionario para buscar ese dia que ya se tiene y le hago ++ a su valor
+          let numeroValor:any = diccionarioFinal.get(mailEspecialista);
+          numeroValor++;
+          diccionarioFinal.set(mailEspecialista,numeroValor);
+        }
+      }
+      contador++;
+    });
+
+    console.log(diccionarioFinal);
+    return diccionarioFinal;
+  }
+
+    // ---------------------------- HISTORIA CLINICA -------------------------//
+
+    // public async leerHistoriaClinicaDB()
+    // {
+    //   let arrayTurnos = new Array();
+  
+    //   const querySnapshot = await getDocs(turnos);
+    //   querySnapshot.forEach((doc) => 
+    //   {
+    //     //creo el usuario y le agrego la data
+    //     let turno = 
+    //     {
+    //       especialista: doc.data()['especialista'],
+    //       paciente: doc.data()['paciente'],
+    //       estado: doc.data()['estado'],
+    //       info: doc.data()['info'],
+    //       especialidad: doc.data()['especialidad'],
+    //       solicitado: doc.data()['solicitado'],
+    //       resena: doc.data()['resena'],
+    //       comentario: doc.data()['comentario'],
+    //     }
+  
+    //     arrayTurnos.push(turno);
+    //   });
+  
+    //   console.log(arrayTurnos);
+    //   return arrayTurnos;
+    // }
+
 }

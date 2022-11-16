@@ -1,7 +1,20 @@
 <div class="p-4 p-md-5 mb-4 rounded" id="contenedor-absoluto-2" *ngIf="this.srvAuth.isEspecialist == true" >
 
+   <div *ngIf="historiaClinicaSeleccionada != undefined" id="historia-clinica-detalles">
+      <label>
+         Reseña del turno: <br>
+         {{historiaClinicaSeleccionada.resenaPaciente}}
+         <br>
+         <br>
+         Fecha detallada del turno: 
+         <br>
+         {{historiaClinicaSeleccionada.fechaTurno}}
+      </label>
+   </div>
+
    <ul>
-        <li class="historia-paciente" *ngFor="let historiaClinica of historiasClinicasEspecialista">
+        <li class="historia-paciente" *ngFor="let historiaClinica of historiasClinicasEspecialista" (click)="actualizarDataHistoriaClickeada(historiaClinica)">
+            <img src="{{historiaClinica.fotoPaciente}}" width="25px" height="25px" class="foto-paciente"><br><br>
            <label>Paciente: {{historiaClinica.paciente}}</label><br><br>
            <label>Datos Fijos: <br> 
             Altura: {{historiaClinica.altura}} cm / Peso: {{historiaClinica.peso}} kg / Presión: {{historiaClinica.presion}} mmHg / Temperatura: {{historiaClinica.temperatura + ' °C'}}<br><br>

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/Servicios/auth.service';
 import { FirebaseService } from 'src/app/Servicios/firebase.service';
+import { PdfExportService } from 'src/app/Servicios/pdf-export.service';
+import html2canvas from 'html2canvas';
+
+// let jsPDF = require('../../../../../../node_modules/jspdf/dist/jspdf.min.js');
 
 @Component({
   selector: 'app-mi-perfil',
@@ -9,7 +13,7 @@ import { FirebaseService } from 'src/app/Servicios/firebase.service';
 })
 export class MiPerfilComponent implements OnInit {
 
-  constructor(public srvAuth:AuthService, public srvFirebase:FirebaseService) {}
+  constructor(public srvAuth:AuthService, public srvFirebase:FirebaseService, public srvPdfExport:PdfExportService) {}
 
   async ngOnInit() 
   {
@@ -498,4 +502,30 @@ export class MiPerfilComponent implements OnInit {
       }, 50);
     }
   }
+
+
+  descargarHistoriaClinicaPaciente()
+  {
+    let arrayHistoriaDelPaciente = this.historiaClinicaPaciente;
+    console.log(arrayHistoriaDelPaciente);
+
+    
+    
+    // this.srvPdfExport.crear_y_descargar_PDF(arrayHistoriaDelPaciente);
+  }
+
+  // crearPdf() {
+  //   let DATA = <HTMLElement>document.getElementById('pdfTable');
+  //   html2canvas(DATA).then((canvas) => {
+  //     let fileWidth = 208;
+  //     let fileHeight = (canvas.height * fileWidth) / canvas.width;
+  //     const FILEURI = canvas.toDataURL('image/png');
+  //     let PDF = new jsPDF('p', 'mm', 'a4');
+  //     let position = 0;
+  //     PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+  //     var nombreArchivo = 'historia-clinica.pdf';
+  //     PDF.save(nombreArchivo);
+  //   });
+  // }
+
 }

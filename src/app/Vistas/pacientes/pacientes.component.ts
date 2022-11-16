@@ -13,10 +13,13 @@ export class PacientesComponent implements OnInit {
 
   public historiasClinicasEspecialista: any[] = [];
 
+  public historiaClinicaSeleccionada:any = undefined;
+
   async ngOnInit(): Promise<void> 
   {
     this.historiasClinicasEspecialista = await this.srvFirebase.leerTurnosByMailEspecialistaDB(this.srvAuth.userLogedmail);
-    
+
+
     this.historiasClinicasEspecialista.sort((a,b)=>
     {
       if(a.paciente > b.paciente)
@@ -30,6 +33,11 @@ export class PacientesComponent implements OnInit {
     });
 
     console.log(this.historiasClinicasEspecialista);
+  }
+
+  actualizarDataHistoriaClickeada(historiaClinicaClickeada:any)
+  {
+    this.historiaClinicaSeleccionada = historiaClinicaClickeada;
   }
 
 }

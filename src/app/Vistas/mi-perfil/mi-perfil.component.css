@@ -114,6 +114,16 @@ li
 {
     background-color: #556e78;
 }
+
+#btn-descargar-pdf-paciente
+{
+  border-radius: 4px;
+  width: 50%;
+  margin-left: 25%;
+  color: white;
+  background-color: #556e78;
+  border: 1px solid white;
+}
 /* ---- */
 
 @media (max-width: 1252px)
